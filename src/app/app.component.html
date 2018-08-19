@@ -6,5 +6,14 @@
   
   <div class="split right">
     <div class="centered">
-    </div>
+    <form (ngSubmit)="onSubmit()" [formGroup]="userForm">
+      <mat-form-field>
+        <input matInput placeholder="User Name" name="name" formControlName = "name"/>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Password" type="password" name="password" formControlName = "password" />
+      </mat-form-field><br>
+      <button mat-button >Login</button>
+    </form> 
+    </div>    
   </div> 
