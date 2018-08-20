@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 const loginForm = {
   name: [ '', Validators.required ],
   password: [ '', Validators.required ]
@@ -12,17 +13,9 @@ const loginForm = {
 })
 
 export class AppComponent {
-  public userForm: FormGroup;
-  constructor(
-     private formBilder: FormBuilder,
-      
-  ){
-    this.userForm = this.formBilder.group(loginForm);   
-  }
-  public onSubmit() {
-    if (this.userForm.valid) {
-    console.log("Your user Name is "+this.userForm.value.name);
-    console.log("Your password is "+this.userForm.value.password);
+    constructor(public router:Router) {
+      this.router.navigate(['/login']);
     }
-  }
+ 
+  
 }
