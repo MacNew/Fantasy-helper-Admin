@@ -1,25 +1,22 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { User } from './user'
+import { User } from './user';
 import { catchError, retry } from 'rxjs/operators';
 import {RequestOptions, Request, Headers } from '@angular/http';
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type':'application/json',
+    'Content-Type':'application/json' 
   })
 };
-
     @Injectable({
   providedIn: 'root'
 })
 
-export class DatabaserviceService {
+export class AuthService {
   authUrl = 'fantasyhelper/genratetoken';
-  headerss = new Headers({ 'Content-Type': 'application/json' });
-
-
+  apiUrl = 'fantasyhelper/api';
   constructor(private http: HttpClient) { }
   
   public authenticateToken(user:User):any {
@@ -33,7 +30,7 @@ export class DatabaserviceService {
     if (error.error instanceof ErrorEvent) {
       console.log('An error occurred', error.error.message);
     } else {
-      console.log('Back in returned code', error.message);
+      console.log('Back in returned code', error.status);
     }
     return throwError('Something bad happened; please try again later.'+error.message);
   }

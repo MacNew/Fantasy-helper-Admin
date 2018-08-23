@@ -7,7 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AppRoutingModule, routingComponent } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
-import { DatabaserviceService } from './share/databaservice.service';
+import { AuthService } from './share/authentication.service';
 
 @NgModule({
   declarations: [
@@ -24,7 +24,7 @@ import { DatabaserviceService } from './share/databaservice.service';
     HttpClientModule,
     
   ],
-  providers: [DatabaserviceService],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
