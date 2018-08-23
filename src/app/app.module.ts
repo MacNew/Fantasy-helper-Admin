@@ -10,7 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './share/authService/authentication.service';
 import { SpringService } from './share/springService/spring.service';
 import { HttperrorresponseService } from './share/httpErrorHandlingService/httperrorresponse.service'
-
+import { AuthGuard } from './auth.guard';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +25,7 @@ import { HttperrorresponseService } from './share/httpErrorHandlingService/httpe
     AppRoutingModule,
     HttpClientModule,
   ],
-  providers: [ AuthService, SpringService, HttperrorresponseService ],
+  providers: [ AuthService, SpringService, HttperrorresponseService, AuthGuard ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

@@ -21,6 +21,5 @@ export class AuthService {
   public getToken(user:User):any {
     return this.http.post(this.authUrl, user,httpOptions); 
   }
-
  
 }
