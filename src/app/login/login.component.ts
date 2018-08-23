@@ -8,7 +8,6 @@ import { HttperrorresponseService } from '../share/httpErrorHandlingService/http
 import { catchError, tap } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 
-
 const loginForm = {
   name: [ '', Validators.required ],
   password: [ '', Validators.required ]
@@ -40,9 +39,10 @@ export class LoginComponent  {
       this.authService.getToken(user).pipe(
         catchError(this.handleError.handleError)
       ).subscribe(mytoken => {
+        localStorage.setItem('token', mytoken.token);
+        this.router.navigate(["/dashboard"]);
         console.log('token', mytoken.token);
       });
   }
 }
-
 }
