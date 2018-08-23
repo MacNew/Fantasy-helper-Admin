@@ -15,6 +15,7 @@ import { AuthGuard } from './auth.guard';
   declarations: [
     AppComponent,
    routingComponent,
+   
   
   ],
   imports: [
