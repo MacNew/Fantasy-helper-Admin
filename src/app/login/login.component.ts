@@ -4,10 +4,16 @@ import { Route } from '@angular/router';
 import { Router } from '@angular/router';
 import { AuthService } from '../share/authService/authentication.service';
 import { User } from '../share/user';
+import { HttperrorresponseService } from '../share/httpErrorHandlingService/httperrorresponse.service'
+import { catchError, tap } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+
+
 const loginForm = {
   name: [ '', Validators.required ],
   password: [ '', Validators.required ]
 };
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -16,12 +22,11 @@ const loginForm = {
 
 export class LoginComponent  {
   public userForm: FormGroup;
-
   constructor(
     private formBilder: FormBuilder,
     private router: Router,
-    private databaseService: AuthService
-     
+    private authService: AuthService,
+    private handleError: HttperrorresponseService
  ){
    this.userForm = this.formBilder.group(loginForm);   
  }
@@ -31,13 +36,13 @@ export class LoginComponent  {
     const user: User = {
       'userName': this.userForm.value.name,
       'password': this.userForm.value.password
-    } 
-    this.databaseService.authenticateToken(user).subscribe(
-      mytoken => {
-        localStorage.setItem('token',mytoken.token);
-        console.log('My token',localStorage.getItem('token') );
-      }
-    ), erro => console.log('Error on onSubmit()');
+    }
+      this.authService.getToken(user).pipe(
+        catchError(this.handleError.handleError)
+      ).subscribe(mytoken => {
+        console.log('token', mytoken.token);
+      });
   }
 }
+
 }

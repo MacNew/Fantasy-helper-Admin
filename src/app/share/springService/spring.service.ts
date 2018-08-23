@@ -12,6 +12,5 @@ const httpOptions = {
 })
 export class SpringService {
   constructor(private http: HttpClient) { }
-      
 }
 
