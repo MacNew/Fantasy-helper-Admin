@@ -8,7 +8,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AppRoutingModule, routingComponent } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './share/authService/authentication.service';
-import { SpringService } from './share/springService/spring.service'
+import { SpringService } from './share/springService/spring.service';
+import { HttperrorresponseService } from './share/httpErrorHandlingService/httperrorresponse.service'
 
 @NgModule({
   declarations: [
@@ -23,9 +24,8 @@ import { SpringService } from './share/springService/spring.service'
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
-    
   ],
-  providers: [ AuthService, SpringService ],
+  providers: [ AuthService, SpringService, HttperrorresponseService ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }
