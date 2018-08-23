@@ -6,6 +6,8 @@ import { MyOwnCustomMaterialModule } from './material'
 import { ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AppRoutingModule, routingComponent } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
+import { DatabaserviceService } from './share/databaservice.service';
 
 @NgModule({
   declarations: [
@@ -18,9 +20,11 @@ import { AppRoutingModule, routingComponent } from './app-routing.module';
     BrowserAnimationsModule,
     MyOwnCustomMaterialModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    
   ],
-  providers: [],
+  providers: [DatabaserviceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

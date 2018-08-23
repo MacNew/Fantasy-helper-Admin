@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Route } from '@angular/router';
 import { Router } from '@angular/router';
+import { DatabaserviceService } from '../share/databaservice.service';
+import { User } from '../share/user';
 const loginForm = {
   name: [ '', Validators.required ],
   password: [ '', Validators.required ]
@@ -17,7 +19,8 @@ export class LoginComponent  {
 
   constructor(
     private formBilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private databaseService: DatabaserviceService
      
  ){
    this.userForm = this.formBilder.group(loginForm);   
@@ -25,7 +28,12 @@ export class LoginComponent  {
 
  public onSubmit() {
   if (this.userForm.valid) {
-  this.router.navigate(["/dashboard"]);
+    const user: User = { 'userName': 'MacNew','password': 'test'}; 
+    this.databaseService.authenticateToken(user).subscribe(
+      mytoken => {
+        console.log('mytoken', mytoken); 
+      }
+    );
   }
 }
 
