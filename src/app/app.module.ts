@@ -7,7 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AppRoutingModule, routingComponent } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
-import { AuthService } from './share/authentication.service';
+import { AuthService } from './share/authService/authentication.service';
 
 @NgModule({
   declarations: [

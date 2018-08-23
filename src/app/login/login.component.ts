@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Route } from '@angular/router';
 import { Router } from '@angular/router';
-import { AuthService } from '../share/authentication.service';
+import { AuthService } from '../share/authService/authentication.service';
 import { User } from '../share/user';
 const loginForm = {
   name: [ '', Validators.required ],
