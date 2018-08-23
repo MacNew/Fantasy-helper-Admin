@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { User } from './user';
+import { User } from '../user';
 import { catchError, retry } from 'rxjs/operators';
 import {RequestOptions, Request, Headers } from '@angular/http';
 
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':'application/json' 
-  })
+  }) 
 };
-    @Injectable({
+  @Injectable({
   providedIn: 'root'
 })
 
@@ -35,4 +35,3 @@ export class AuthService {
     return throwError('Something bad happened; please try again later.'+error.message);
   }
 }
-
