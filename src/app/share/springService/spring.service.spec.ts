@@ -7,7 +7,7 @@ describe('SpringService', () => {
     TestBed.configureTestingModule({
       providers: [SpringService]
     });
-  });
+  }); 
 
   it('should be created', inject([SpringService], (service: SpringService) => {
     expect(service).toBeTruthy();

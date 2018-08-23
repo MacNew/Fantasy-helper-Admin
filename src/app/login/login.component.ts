@@ -28,11 +28,14 @@ export class LoginComponent  {
 
  public onSubmit() {
   if (this.userForm.valid) {
-    const user: User = { 'userName': 'MacNew','password': 'test'}; 
+    const user: User = {
+      'userName': this.userForm.value.name,
+      'password': this.userForm.value.password
+    } 
     this.databaseService.authenticateToken(user).subscribe(
       mytoken => {
         localStorage.setItem('token',mytoken.token);
-        console.log('Token', localStorage.getItem('token'));
+        console.log('My token',localStorage.getItem('token') );
       }
     ), erro => console.log('Error on onSubmit()');
   }
