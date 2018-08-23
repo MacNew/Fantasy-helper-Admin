@@ -8,6 +8,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AppRoutingModule, routingComponent } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './share/authService/authentication.service';
+import { SpringService } from './share/springService/spring.service'
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import { AuthService } from './share/authService/authentication.service';
     HttpClientModule,
     
   ],
-  providers: [AuthService],
-  bootstrap: [AppComponent]
+  providers: [ AuthService, SpringService ],
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }
