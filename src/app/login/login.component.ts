@@ -7,6 +7,8 @@ import { User } from '../share/user';
 import { HttperrorresponseService } from '../share/httpErrorHandlingService/httperrorresponse.service'
 import { catchError, tap } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
+import { MessageService } from '../share/message.service';
+import { HttpResponse } from '@angular/common/http';
 
 const loginForm = {
   name: [ '', Validators.required ],
@@ -25,7 +27,8 @@ export class LoginComponent  {
     private formBilder: FormBuilder,
     private router: Router,
     private authService: AuthService,
-    private handleError: HttperrorresponseService
+    private handleError: HttperrorresponseService,
+    private messageService: MessageService
  ){
    this.userForm = this.formBilder.group(loginForm);   
  }
@@ -37,11 +40,12 @@ export class LoginComponent  {
       'password': this.userForm.value.password
     }
       this.authService.getToken(user).pipe(
-        catchError(this.handleError.handleError)
+        catchError(this.handleError.errorHandling) 
       ).subscribe(mytoken => {
         localStorage.setItem('token', mytoken.token);
         this.router.navigate(["/dashboard"]);
-        console.log('token', mytoken.token);
+      }, error => {
+         this.messageService.showMessage('User name or password does not match');
       });
   }
 }

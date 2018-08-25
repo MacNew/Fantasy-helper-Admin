@@ -10,11 +10,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './share/authService/authentication.service';
 import { SpringService } from './share/springService/spring.service';
 import { HttperrorresponseService } from './share/httpErrorHandlingService/httperrorresponse.service'
+import { MessageService } from './share/message.service';
 import { AuthGuard } from './auth.guard';
 @NgModule({
   declarations: [
     AppComponent,
-   routingComponent,
+   routingComponent
    
   
   ],
@@ -24,9 +25,9 @@ import { AuthGuard } from './auth.guard';
     MyOwnCustomMaterialModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    HttpClientModule,
+    HttpClientModule
   ],
-  providers: [ AuthService, SpringService, HttperrorresponseService, AuthGuard ],
+  providers: [ AuthService, SpringService, HttperrorresponseService, AuthGuard,MessageService ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }
