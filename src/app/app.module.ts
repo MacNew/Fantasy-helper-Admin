@@ -12,11 +12,14 @@ import { SpringService } from './share/springService/spring.service';
 import { HttperrorresponseService } from './share/httpErrorHandlingService/httperrorresponse.service'
 import { MessageService } from './share/message.service';
 import { AuthGuard } from './auth.guard';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material';
+import { FantasyHelperNavComponent } from './fantasy-helper-nav/fantasy-helper-nav.component'
 @NgModule({
   declarations: [
     AppComponent,
-   routingComponent
-   
+   routingComponent,
+   FantasyHelperNavComponent
   
   ],
   imports: [
@@ -25,7 +28,13 @@ import { AuthGuard } from './auth.guard';
     MyOwnCustomMaterialModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule
   ],
   providers: [ AuthService, SpringService, HttperrorresponseService, AuthGuard,MessageService ],
   bootstrap: [ AppComponent ]
