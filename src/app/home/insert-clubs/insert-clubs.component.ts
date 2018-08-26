@@ -35,12 +35,13 @@ export class InsertClubsComponent {
         catchError(this.handleError.errorHandling)
        ).subscribe(res => {
          this.messageService.showMessage('Club inserted '+ this.clubForm.value.clubName);
- 
-       }, error=> this.messageService.showMessage('Sorry data not saved'+error));
+       }, error => {
+        
+        this.messageService.showMessage(error.message);
+       });
 
-      this.messageService.showMessage('You Inserted '+this.clubForm.value.clubName );
-    }
+      }
+  
   }
-
 
 }
