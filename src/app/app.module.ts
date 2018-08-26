@@ -4,8 +4,8 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MyOwnCustomMaterialModule } from './material'
 import { ReactiveFormsModule } from '@angular/forms';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { AppRoutingModule, routingComponent } from './app-routing.module';
+import { HomeModule } from './home/home.module';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './share/authService/authentication.service';
 import { SpringService } from './share/springService/spring.service';
@@ -13,14 +13,12 @@ import { HttperrorresponseService } from './share/httpErrorHandlingService/httpe
 import { MessageService } from './share/message.service';
 import { AuthGuard } from './auth.guard';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material';
 import { FantasyHelperNavComponent } from './fantasy-helper-nav/fantasy-helper-nav.component'
 @NgModule({
   declarations: [
-    AppComponent,
+   AppComponent,
    routingComponent,
    FantasyHelperNavComponent
-  
   ],
   imports: [
     BrowserModule,
@@ -30,11 +28,7 @@ import { FantasyHelperNavComponent } from './fantasy-helper-nav/fantasy-helper-n
     AppRoutingModule,
     HttpClientModule,
     LayoutModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule
+    HomeModule
   ],
   providers: [ AuthService, SpringService, HttperrorresponseService, AuthGuard,MessageService ],
   bootstrap: [ AppComponent ]

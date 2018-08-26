@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { HomeComponent } from './home/home.component';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './auth.guard';
-import { PageNotFoundComponent } from './pagenotfound/page-not-found.component';
 
 const routes: Routes = [
   {
@@ -19,10 +18,10 @@ const routes: Routes = [
               data: ['loginComponent']
           },
           {
-              path:'dashboard',
-              component: DashboardComponent,
+              path:'home',
+              component: HomeComponent,
               canActivate: [AuthGuard],
-              data: ['dashboardComponent']
+              data: ['homeComponent']
           },
           {
             path:'',
@@ -30,7 +29,7 @@ const routes: Routes = [
             canActivate: [AuthGuard],
             data: ['']
         },
-        {path:'**', component: PageNotFoundComponent}
+        
       ]
   }
 ];
@@ -42,4 +41,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
-export const routingComponent= [DashboardComponent,LoginComponent, PageNotFoundComponent];
+export const routingComponent= [HomeComponent,LoginComponent];

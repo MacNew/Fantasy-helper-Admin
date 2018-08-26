@@ -43,7 +43,7 @@ export class LoginComponent  {
         catchError(this.handleError.errorHandling) 
       ).subscribe(mytoken => {
         localStorage.setItem('token', mytoken.token);
-        this.router.navigate(["/dashboard"]);
+        this.router.navigate(["/home"]);
       }, error => {
          this.messageService.showMessage('User name or password does not match');
       });

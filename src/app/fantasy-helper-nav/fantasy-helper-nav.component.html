@@ -8,8 +8,8 @@
     [opened]="!(isHandset$ | async)">
     <mat-toolbar >Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item href="#">Home</a>
-      <a mat-list-item href="#">Insert Clubs</a>
+      <a mat-list-item routerLink = "">Home</a>
+      <a mat-list-item routerLink = "insertclubs">Insert Clubs</a>
        <a mat-list-item (click)="logout()">Logout</a>  
      </mat-nav-list>
   </mat-sidenav>
