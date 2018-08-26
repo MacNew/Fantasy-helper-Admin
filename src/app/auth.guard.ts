@@ -16,7 +16,7 @@ export class AuthGuard implements CanActivate {
     const data = route.data[0];
     console.log('My data', data);
     switch(data) {
-       case 'dashboardComponent':
+       case 'homeComponent':
        if (!!localStorage.getItem('token')) {
         return true;
      } else {
@@ -25,14 +25,14 @@ export class AuthGuard implements CanActivate {
      } 
       case 'loginComponent':
       if (!!localStorage.getItem('token')) {
-        this.router.navigate(['/dashboard'])
+        this.router.navigate(['/home'])
         return false;
       } else {
         return true; 
       }
       case '':
       if (!!localStorage.getItem('token')) {
-        this.router.navigate(['/dashboard'])
+        this.router.navigate(['/home'])
         return false;
       } else {
         return true; 

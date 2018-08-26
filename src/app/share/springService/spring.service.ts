@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http'; 
+import { Clubs } from '../clubname';
+
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':'application/json',
@@ -10,7 +12,15 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
+
 export class SpringService {
-  constructor(private http: HttpClient) { }
+  baseUrl:string = 'fantasyhelper/api';
+  constructor(private http: HttpClient) { 
+  }
+
+  public insertClubName(club:Clubs):any {
+    
+    return this.http.post(this.baseUrl+'/insert/clubs', club ,httpOptions); 
+  }
 }
 
