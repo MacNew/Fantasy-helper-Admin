@@ -29,9 +29,10 @@ export class InsertClubsComponent {
   onSubmit() {
     if (this.clubForm.valid) {
       const club: Clubs = {
-        'clubName': this.clubForm.value.clubName 
+        'clubName': this.clubForm.value.clubName,
+        'isPlaying': 'true'
       }
-       this.springService.insertClubName(club).pipe(
+       this.springService.insertClubName(club, this.selectedFile).pipe(
         catchError(this.handleError.errorHandling)
        ).subscribe(res => {
          this.messageService.showMessage('Club inserted '+ this.clubForm.value.clubName);
@@ -41,7 +42,10 @@ export class InsertClubsComponent {
        });
 
       }
-  
+  }
+  selectedFile = null;
+  onFileSelected(event) {
+    this.selectedFile = event.target.files[0];
   }
 
 }

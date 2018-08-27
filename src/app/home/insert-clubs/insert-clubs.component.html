@@ -10,7 +10,8 @@ fxLayoutGap="0.5%" fxLayoutAlign="center" style="margin: 5px">
               <mat-error>
                 Club name is required
               </mat-error>
-            </mat-form-field> 
+            </mat-form-field>
+              <input type="file" (change) ="onFileSelected($event)"/>
               <button mat-button >Save Inserted Club</button>
           </form>
     </div>

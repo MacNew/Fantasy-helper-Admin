@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http'; 
+import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams, HttpRequest } from '@angular/common/http'; 
 import { Clubs } from '../clubname';
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type':'application/json',
     'Authorization': 'Token '+localStorage.getItem('token')
   })
 };
@@ -18,9 +17,13 @@ export class SpringService {
   constructor(private http: HttpClient) { 
   }
 
-  public insertClubName(club:Clubs):any {
-    
-    return this.http.post(this.baseUrl+'/insert/clubs', club ,httpOptions); 
+  public insertClubName(club:Clubs, file: any):any {
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+    formData.append('clubName', club.clubName);
+    formData.append('isPlaying', club.isPlaying);
+  
+    return this.http.post(this.baseUrl+'/insert/clubs', formData ,httpOptions); 
   }
 }
 
