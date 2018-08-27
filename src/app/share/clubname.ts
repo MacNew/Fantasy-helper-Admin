@@ -1,3 +1,4 @@
 export interface Clubs {
-    clubName: string
+    clubName: string;
+    isPlaying: string;
 }
