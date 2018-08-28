@@ -5,17 +5,18 @@ import { MatFormFieldModule} from '@angular/material/form-field';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule, MatIconModule, MatToolbarModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
     imports: [ MatFormFieldModule, MatButtonModule, 
         FormsModule,MatSidenavModule,MatListModule,
         MatInputModule, MatCardModule, MatIconModule,
-        MatToolbarModule,FlexLayoutModule
+        MatToolbarModule,FlexLayoutModule,MatSelectModule
     ],
     exports: [MatButtonModule, MatFormFieldModule,MatListModule, 
         FormsModule, MatInputModule,MatSidenavModule, 
         MatSnackBarModule,MatCardModule, MatIconModule,
-        MatToolbarModule,FlexLayoutModule]
+        MatToolbarModule,FlexLayoutModule,MatSelectModule]
 })
 export class MyOwnCustomMaterialModule {
 

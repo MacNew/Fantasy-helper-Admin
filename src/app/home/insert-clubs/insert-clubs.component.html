@@ -1,22 +1,42 @@
 <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap 
-fxLayoutGap="0.5%" fxLayoutAlign="center" style="margin: 5px">
+fxLayoutGap="15%" fxLayoutAlign="center" style="margin: 5px">
   <div fxFlex="50%">
-    <div>
+    <p style="margint:15%">Insert Form<p>
+    <mat-card>
         <form (ngSubmit)="onSubmit()" [formGroup]="clubForm">
           <mat-form-field style="width: 100%">
              <input matInput placeholder="Club Name" 
-             formControlName = "clubName"
+             formControlName = "clubName" [(ngModel)] = "clubLogoName"
              />
               <mat-error>
                 Club name is required
               </mat-error>
             </mat-form-field>
-              <input type="file" (change) ="onFileSelected($event)"/>
-              <button mat-button >Save Inserted Club</button>
+            <mat-form-field style="width: 100%">
+              <mat-select placeholder = "Is Current Playing" formControlName= "isCurrentPlaying">
+               <mat-option value="true">
+                 true
+               </mat-option>
+               <mat-option value="false">
+                  false
+                </mat-option>
+               </mat-select>
+               <mat-error>
+                 It is required
+               </mat-error>
+            </mat-form-field>
+            <input type="file" (change) ="onFileSelected($event)" formControlName = "file"/>
+            <button mat-button style="width: 100%; margin-top: 15px">Save Inserted Club</button> 
           </form>
-    </div>
+    </mat-card>
+    <mat-card style="margin-top: 20px">
+      <mat-card-header>
+        <mat-card-title>{{clubLogoName}}</mat-card-title>
+      </mat-card-header>
+      <img id = "club_pic" [src] ="imageSrc || 'http://placehold.it/180'" alt="Club logo"/> 
+    </mat-card>
   </div>
-  <div fxFlex="50%">
-      Display Clubs
+  <div fxFlex="50%" style="align-items: center">
+      Display Inserted Club Name
   </div>
 </div>
