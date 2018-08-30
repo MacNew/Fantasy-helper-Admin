@@ -1,33 +1,37 @@
-<div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap 
-fxLayoutGap="15%" fxLayoutAlign="center" style="margin: 5px">
+<div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15%" fxLayoutAlign="center" style="margin: 5px">
   <div fxFlex="50%">
-    <p style="margint:15%">Insert Form<p>
+    <p style="margin:5%; margin-left: 35%">Insert Clubs Details<p>
     <mat-card>
-        <form (ngSubmit)="onSubmit()" [formGroup]="clubForm">
+      <form (ngSubmit)="onSubmit()" [formGroup]="clubForm">
+        <mat-form-field style="width: 100%">
+            <input matInput placeholder="Club Name" formControlName = "clubName" [(ngModel)] = "clubLogoName"/>
+            <mat-error>Club name is required</mat-error>
+          </mat-form-field>
           <mat-form-field style="width: 100%">
-             <input matInput placeholder="Club Name" 
-             formControlName = "clubName" [(ngModel)] = "clubLogoName"
-             />
+            <mat-select placeholder = "Is Current Playing" formControlName= "isCurrentPlaying">
+              <mat-option value="true">
+                true
+              </mat-option>
+              <mat-option value="false">
+                false
+              </mat-option>
+              </mat-select>
               <mat-error>
-                Club name is required
+                It is required
               </mat-error>
-            </mat-form-field>
-            <mat-form-field style="width: 100%">
-              <mat-select placeholder = "Is Current Playing" formControlName= "isCurrentPlaying">
-               <mat-option value="true">
-                 true
-               </mat-option>
-               <mat-option value="false">
-                  false
-                </mat-option>
-               </mat-select>
-               <mat-error>
-                 It is required
-               </mat-error>
-            </mat-form-field>
-            <input type="file" (change) ="onFileSelected($event)" formControlName = "file"/>
-            <button mat-button style="width: 100%; margin-top: 15px">Save Inserted Club</button> 
-          </form>
+          </mat-form-field>
+            <input mat-file type= "file"
+              (change) ="onFileSelected($event)" 
+              formControlName = "file">
+              <div *ngIf="!clubForm.controls['file'].valid && clubForm.controls['file'].touched"
+              style="font-size:12px; color: red"
+              >
+                  File Format must be jpg or png
+              </div> 
+        <button mat-button style="width: 100%; margin-top: 15px"
+          [disabled]="clubForm.invalid || clubForm.prestine"
+          >Save Inserted Club</button> 
+        </form>
     </mat-card>
     <mat-card style="margin-top: 20px">
       <mat-card-header>
