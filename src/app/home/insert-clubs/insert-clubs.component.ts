@@ -5,6 +5,8 @@ import { SpringService } from '../../share/springService/spring.service'
 import { Clubs } from '../../share/clubname';
 import { HttperrorresponseService } from '../../share/httpErrorHandlingService/httperrorresponse.service'
 import { catchError } from 'rxjs/operators';
+import { CustomValidators } from '../../validators/custom-validators';
+
 @Component({
   selector: 'app-insert-clubs',
   templateUrl: './insert-clubs.component.html',
@@ -13,10 +15,16 @@ import { catchError } from 'rxjs/operators';
 
 export class InsertClubsComponent {
   clubLogoName: string = "";
+  imageSrc: string;
   myClubForm = {
   clubName: ['', Validators.required],
-  file: ['', Validators.required],
-  isCurrentPlaying: ['', Validators.required]
+  file: ['', 
+    Validators.compose([
+    Validators.required, CustomValidators.fileVlidation
+    ])
+  ],
+  isCurrentPlaying: ['', Validators.required],
+  
 }
   public clubForm: FormGroup;
   selectedFile = null;
@@ -33,7 +41,8 @@ export class InsertClubsComponent {
     if (this.clubForm.valid) {
       const club: Clubs = {
         'clubName': this.clubForm.value.clubName,
-        'isPlaying': this.clubForm.value.isCurrentPlaying
+        'isPlaying': this.clubForm.value.isCurrentPlaying,
+      
       }
        this.springService.insertClubName(club, this.selectedFile).pipe(
         catchError(this.handleError.errorHandling)
@@ -47,12 +56,13 @@ export class InsertClubsComponent {
        });
       }
   }
-  imageSrc: string;
+  
   onFileSelected(event): void {
       this.selectedFile = event.target.files[0];
       const reader = new FileReader();
       reader.onload = e => this.imageSrc = reader.result;
-      reader.readAsDataURL(this.selectedFile);    
+      reader.readAsDataURL(this.selectedFile);
+    
   }
 
 }
