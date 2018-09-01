@@ -9,11 +9,12 @@ export class CustomValidators {
     }
 
 static validateFile(filetype: string) {
-    
+      if (filetype!= null) {
       var myextenstion =filetype.substring(filetype.lastIndexOf('.')+1, filetype.length) || filetype;
       var validFileExtensions = ['jpg','jpeg','bmp','gif','png'];
       return validFileExtensions.includes(myextenstion);
-       
+      }
+      return null;    
  }
 }
 
