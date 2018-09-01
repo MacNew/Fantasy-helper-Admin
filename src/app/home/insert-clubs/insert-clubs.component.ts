@@ -50,9 +50,8 @@ export class InsertClubsComponent {
          this.messageService.showMessage('Club inserted '+ this.clubForm.value.clubName);
          this.clubForm.reset();
        }, error => {
-         console.log(error);
+         console.log("This is an error "+error);
         this.messageService.showMessage(error.message.error.erroMessage);
-        
        });
       }
   }
@@ -60,7 +59,7 @@ export class InsertClubsComponent {
   onFileSelected(event): void {
       this.selectedFile = event.target.files[0];
       const reader = new FileReader();
-      reader.onload = e => this.imageSrc = reader.result;
+      reader.onload = e => this.imageSrc = reader.result.toString();
       reader.readAsDataURL(this.selectedFile);
     
   }
