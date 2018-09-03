@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./fantasy-helper-nav.component.css']
 })
 export class FantasyHelperNavComponent {
-
+  
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches)

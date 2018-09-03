@@ -1,4 +1,4 @@
-<div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="15%" fxLayoutAlign="center" style="margin: 5px">
+<div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="2%" fxLayoutAlign="center" style="margin: 5px">
   <div fxFlex="50%">
     <p style="margin:5%; margin-left: 35%">Insert Clubs Details<p>
     <mat-card>
@@ -24,8 +24,7 @@
               (change) ="onFileSelected($event)" 
               formControlName = "file">
               <div *ngIf="!clubForm.controls['file'].valid && clubForm.controls['file'].touched"
-              style="font-size:12px; color: red"
-              >
+              style="font-size:12px; color: red">
                   File Format must be jpg or png
               </div> 
         <button mat-button style="width: 100%; margin-top: 15px"
@@ -41,6 +40,26 @@
     </mat-card>
   </div>
   <div fxFlex="50%" style="align-items: center">
-      Display Inserted Club Name
+    <p style="margin:5%; margin-left: 35%">Club list<p></p>
+    <table mat-table [dataSource] = "clubdetails" class="mat-elevation-z8">
+      <ng-container matColumnDef = "fileName">
+        <th mat-header-cell *matHeaderCellDef>Logo</th>
+        <td mat-cell *matCellDef="let element">
+            <img src= "assets/outside-assets/{{element.fileName}}"
+            alt="assets/outside-assets/{{element.fileName}}"
+            height="200px" width="200px">
+        </td>
+      </ng-container>
+      <ng-container matColumnDef= "clubName">
+        <th mat-header-cell *matHeaderCellDef> Club Name</th>
+        <td mat-cell *matCellDef="let element"> {{element.clubName}} </td>
+      </ng-container>
+      <ng-container matColumnDef= "isCurrentSeasonPlaying">
+          <th mat-header-cell *matHeaderCellDef> Club Name</th>
+          <td mat-cell *matCellDef="let element"> {{element.isCurrentSeasonPlaying}} </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef= "displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns">  
+    </table>
   </div>
 </div>
