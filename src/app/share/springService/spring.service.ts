@@ -8,8 +8,6 @@ const httpOptions = {
   })
 };
 
-const headers = new HttpHeaders().set('Authorization','Token '+localStorage.getItem('token'));
-
 @Injectable({
   providedIn: 'root'
 })
@@ -30,8 +28,6 @@ export class SpringService {
     return this.http.get(this.baseUrl+"/currentseason/get/clubs",httpOptions);
   }
 
-    public getImage(downloadImageLink: string): any {
-      return this.http.get(downloadImageLink,{headers, responseType: 'blob'});
-    }  
+     
 }
 

@@ -1,4 +1,5 @@
-<div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="2%" fxLayoutAlign="center" style="margin: 5px">
+<div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap 
+fxLayoutGap="2%" fxLayoutAlign="center">
   <div fxFlex="50%">
     <p style="margin:5%; margin-left: 35%">Insert Clubs Details<p>
     <mat-card>
@@ -47,7 +48,7 @@
         <td mat-cell *matCellDef="let element">
             <img src= "assets/outside-assets/{{element.fileName}}"
             alt="assets/outside-assets/{{element.fileName}}"
-            height="200px" width="200px">
+            height="100px" width="100px">
         </td>
       </ng-container>
       <ng-container matColumnDef= "clubName">
