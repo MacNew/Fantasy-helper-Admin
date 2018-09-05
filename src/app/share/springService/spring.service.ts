@@ -26,8 +26,6 @@ export class SpringService {
   }
   public getAllClubs(): any {
     return this.http.get(this.baseUrl+"/currentseason/get/clubs",httpOptions);
-  }
-
-     
+  }    
 }
 
