@@ -7,6 +7,8 @@ import { HttperrorresponseService } from '../../share/httpErrorHandlingService/h
 import { catchError } from 'rxjs/operators';
 import { CustomValidators } from '../../validators/custom-validators';
 import { MatTableDataSource } from '@angular/material';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-insert-clubs',
@@ -34,13 +36,19 @@ export class InsertClubsComponent implements OnInit{
 }
   public clubForm: FormGroup;
   selectedFile = null;
+  private onDestroy$ = new Subject<void>();
   constructor(
     private formBilder: FormBuilder,
     private messageService: MessageService,
     private springService: SpringService,
-    private handleError: HttperrorresponseService,   
+    private handleError: HttperrorresponseService,
+    
   ) { 
     this.clubForm = this.formBilder.group(this.myClubForm);
+    this.springService.clublistStateChange$.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+       this.getClubList();    
+    });
+
   }
 
   onSubmit() {
@@ -55,8 +63,8 @@ export class InsertClubsComponent implements OnInit{
          this.messageService.showMessage('Club inserted '+ this.clubForm.value.clubName);
          this.clubForm.reset();
          this.imageSrc = 'http://placehold.it/180';
+         this.springService.clubListStateChange.next();
        }, error => {
-         console.log("This is an error "+error);
         this.messageService.showMessage(error.message.error.erroMessage);
        });
       }
@@ -70,6 +78,10 @@ export class InsertClubsComponent implements OnInit{
   }
 
   ngOnInit() {
+    this.getClubList();
+  }
+
+  getClubList() {
     this.springService.getAllClubs().pipe(
       catchError(this.handleError.errorHandling)
     ).subscribe(res => {
@@ -78,5 +90,4 @@ export class InsertClubsComponent implements OnInit{
       this.messageService.showMessage(error.message.error.erroMessage);
     });
   }
-    
 }

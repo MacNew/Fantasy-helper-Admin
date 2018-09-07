@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams, HttpRequest } from '@angular/common/http'; 
 import { Clubs } from '../clubname';
+import { Subject } from 'rxjs';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -13,6 +14,8 @@ const httpOptions = {
 })
 
 export class SpringService {
+  public clubListStateChange = new Subject<void>()
+  clublistStateChange$ = this.clubListStateChange.asObservable();
   baseUrl:string = 'fantasyhelper/api';
   constructor(private http: HttpClient) { 
   }
@@ -25,6 +28,7 @@ export class SpringService {
     return this.http.post(this.baseUrl+'/insert/clubs', formData ,httpOptions); 
   }
   public getAllClubs(): any {
+    
     return this.http.get(this.baseUrl+"/currentseason/get/clubs",httpOptions);
   }    
 }
