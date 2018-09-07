@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { HomeComponent } from './home.component';
 import { PageNotFoundComponent } from '../pagenotfound/page-not-found.component';
 import { DisplayClubsInsertedComponent } from './display-clubs-inserted/display-clubs-inserted.component'
+import { AuthGuard } from '../auth.guard';
 
 const routes: Routes = [
   {
@@ -12,6 +13,7 @@ const routes: Routes = [
         {
           path:'insertclubs',
           component: InsertClubsComponent,
+          canActivate : [AuthGuard]
         },
       ],
       },

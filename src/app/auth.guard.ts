@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, ActivatedRouteSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
 import { AuthService } from './share/authService/authentication.service';
 
 @Injectable({
@@ -14,7 +13,6 @@ export class AuthGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot) : boolean {
     const data = route.data[0];
-    console.log('My data', data);
     switch(data) {
        case 'homeComponent':
        if (!!localStorage.getItem('token')) {
@@ -37,7 +35,15 @@ export class AuthGuard implements CanActivate {
       } else {
         return true; 
       }
-      
     }
-  }  
+
+    // Insert Clubs Authenticated
+     if (route.url[0].path ==='insertclubs') {
+      if (this.authService.isAdmin()) {
+        return true;
+      } else {
+        return false;
+      }
+     }
+  }
 }

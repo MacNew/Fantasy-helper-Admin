@@ -3,6 +3,7 @@ import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/l
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { AuthService } from '../share/authService/authentication.service'
 
 @Component({
   selector: 'app-fantasy-helper-nav',
@@ -18,13 +19,16 @@ export class FantasyHelperNavComponent {
     
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private router: Router
+    private router: Router,
+    private auth: AuthService
+    
   ) {}
   
   logout() {
     localStorage.removeItem('token');
     this.router.navigate(['/']);
    }
+   
   }
 
 
