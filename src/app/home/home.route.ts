@@ -5,6 +5,7 @@ import { HomeComponent } from './home.component';
 import { PageNotFoundComponent } from '../pagenotfound/page-not-found.component';
 import { DisplayClubsInsertedComponent } from './display-clubs-inserted/display-clubs-inserted.component'
 import { AuthGuard } from '../auth.guard';
+import { InsertPlayerComponent } from './insert-player/insert-player.component'
 
 const routes: Routes = [
   {
@@ -15,6 +16,11 @@ const routes: Routes = [
           component: InsertClubsComponent,
           canActivate : [AuthGuard]
         },
+        {
+         path: 'insertplayer',
+         component: InsertPlayerComponent,
+         canActivate: [AuthGuard]
+        }
       ],
       },
       { path:'**', component: PageNotFoundComponent }

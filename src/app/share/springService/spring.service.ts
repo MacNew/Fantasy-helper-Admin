@@ -28,7 +28,6 @@ export class SpringService {
     return this.http.post(this.baseUrl+'/insert/clubs', formData ,httpOptions); 
   }
   public getAllClubs(): any {
-    
     return this.http.get(this.baseUrl+"/currentseason/get/clubs",httpOptions);
   }    
 }

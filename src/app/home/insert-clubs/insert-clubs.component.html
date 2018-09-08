@@ -9,7 +9,8 @@ fxLayoutGap="2%" fxLayoutAlign="center">
             <mat-error>Club name is required</mat-error>
           </mat-form-field>
           <mat-form-field style="width: 100%">
-            <mat-select placeholder = "Is Current Playing" formControlName= "isCurrentPlaying">
+            <mat-select placeholder = "Is Current Playing" 
+            formControlName= "isCurrentPlaying">
               <mat-option value="true">
                 true
               </mat-option>
@@ -33,7 +34,7 @@ fxLayoutGap="2%" fxLayoutAlign="center">
           >Save Inserted Club</button> 
         </form>
     </mat-card>
-    <mat-card style="margin-top: 20px">
+    <mat-card style="margin-top: 15px">
       <mat-card-header>
         <mat-card-title>{{clubLogoName}}</mat-card-title>
       </mat-card-header>
@@ -41,7 +42,7 @@ fxLayoutGap="2%" fxLayoutAlign="center">
     </mat-card>
   </div>
   <div fxFlex="50%" style="align-items: center">
-    <p style="margin:5%; margin-left: 35%">Club list<p></p>
+    <p style="margin:5%; margin-left: 35%">Club list</p>
     <table mat-table [dataSource] = "clubdetails" class="mat-elevation-z8">
       <ng-container matColumnDef = "fileName">
         <th mat-header-cell *matHeaderCellDef>Logo</th>

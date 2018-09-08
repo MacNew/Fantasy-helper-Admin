@@ -10,7 +10,7 @@ export class AuthGuard implements CanActivate {
   constructor(private authService: AuthService, 
               private router: Router   
   ) {}
-
+  
   canActivate(route: ActivatedRouteSnapshot) : boolean {
     const data = route.data[0];
     switch(data) {
@@ -36,9 +36,10 @@ export class AuthGuard implements CanActivate {
         return true; 
       }
     }
-
     // Insert Clubs Authenticated
-     if (route.url[0].path ==='insertclubs') {
+     if (route.url[0].path ==='insertclubs'
+      || route.url[0].path === 'insertplayer'
+     ) {
       if (this.authService.isAdmin()) {
         return true;
       } else {
