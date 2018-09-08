@@ -6,18 +6,20 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule, MatIconModule, MatToolbarModule, MatTableModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatSelectModule } from '@angular/material/select';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 @NgModule({
     imports: [ MatFormFieldModule, MatButtonModule, 
         FormsModule,MatSidenavModule,MatListModule,
         MatInputModule, MatCardModule, MatIconModule,
         MatToolbarModule,FlexLayoutModule,MatSelectModule,
-        MatTableModule
+        MatTableModule,MatGridListModule
     ],
     exports: [MatButtonModule, MatFormFieldModule,MatListModule, 
         FormsModule, MatInputModule,MatSidenavModule, 
         MatSnackBarModule,MatCardModule, MatIconModule,
         MatToolbarModule,FlexLayoutModule,MatSelectModule,MatTableModule
+        ,MatGridListModule
     ]
 })
 export class MyOwnCustomMaterialModule {

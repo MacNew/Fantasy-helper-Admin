@@ -4,11 +4,11 @@ import { MessageService } from '../../share/message.service'
 import { SpringService } from '../../share/springService/spring.service'
 import { Clubs } from '../../share/clubname';
 import { HttperrorresponseService } from '../../share/httpErrorHandlingService/httperrorresponse.service'
-import { catchError } from 'rxjs/operators';
+import { catchError, switchMap, mergeMap } from 'rxjs/operators';
 import { CustomValidators } from '../../validators/custom-validators';
 import { MatTableDataSource } from '@angular/material';
 import { takeUntil,map } from 'rxjs/operators';
-import { Subject, of } from 'rxjs';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 
 @Component({
@@ -18,8 +18,12 @@ import { Subject, of } from 'rxjs';
 })
 export class InsertPlayerComponent implements OnInit {
   clublist: clubDetails[]=[];
+  clubImage: any;
+  playerImage: any;
+  selectedFile = null;
+ 
   player = {
-    clubName: ['',Validators.required],
+    playerclubName: ['',Validators.required],
     playerName: ['',Validators.required],
     file: ['',Validators.compose([
       Validators.required, CustomValidators.fileVlidation
@@ -31,6 +35,7 @@ export class InsertPlayerComponent implements OnInit {
     private messageService: MessageService,
     private springService: SpringService,
     private handleError: HttperrorresponseService,
+    private sanitizer: DomSanitizer
     ) {
      this.playerForm = this.formBuilder.group(this.player);
      }
@@ -46,6 +51,27 @@ export class InsertPlayerComponent implements OnInit {
         this.clublist.push(Object.assign({clubName: element.clubName,id:element.id}));
       });
      });
+  } 
+  clubNameChanged(event) {
+       this.springService.getFileName(event).pipe(
+         catchError(this.handleError.errorHandling),
+         switchMap((res: any)=> {
+           return  this.springService.downloadFile(res['fileName'].toString());
+         })
+       ).subscribe((res:any)=>{
+         let UrlCreator = window.URL;
+         this.clubImage = this.sanitizer.bypassSecurityTrustUrl(
+         UrlCreator.createObjectURL(res))
+    }, error=>{
+       this.messageService.showMessage(error.message);
+    });
+  }
+    
+  onFileSelected(event) {
+    this.selectedFile = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = e => this.playerImage = reader.result.toString();  
+    reader.readAsDataURL(this.selectedFile);
   }
 }
 

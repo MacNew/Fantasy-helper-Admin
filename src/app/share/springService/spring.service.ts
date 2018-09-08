@@ -9,6 +9,8 @@ const httpOptions = {
   })
 };
 
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -27,8 +29,19 @@ export class SpringService {
     formData.append('isPlaying', club.isPlaying);
     return this.http.post(this.baseUrl+'/insert/clubs', formData ,httpOptions); 
   }
+
   public getAllClubs(): any {
     return this.http.get(this.baseUrl+"/currentseason/get/clubs",httpOptions);
-  }    
+  }
+
+  public getFileName(club_id: any) {
+   return this.http.get(this.baseUrl+"/fileName/"+club_id,httpOptions);
+  }
+  public downloadFile(fileName: string) {
+    return this.http.get(this.baseUrl+"/downloadFile/"+fileName,{
+      headers: new HttpHeaders().set('Authorization','Token '+localStorage.getItem('token')),
+      responseType: 'blob'
+    })
+  }
 }
 

@@ -1,31 +1,49 @@
 <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap 
 fxLayoutGap="2%" fxLayoutAlign="center">
  <div fxFlex="50%">
-  <p style="margin:5%; margin-left: 35%">Inserted Player Details<p>
+  <p style="margin:5%">
+    <mat-grid-list cols="2" rowHeight="50px">
+      <mat-grid-tile>
+        <img style="border-radius:50%" id = "playerImage" [src] ="clubImage || 'http://placehold.it/180'"
+        alt="Club picture" height="50px" width="50px"/>    
+      </mat-grid-tile>
+      <mat-grid-tile>
+       Insert Player
+      </mat-grid-tile>
+    </mat-grid-list> 
+    <p>
     <mat-card>
       <form [formGroup]="playerForm">
-        <mat-select placeholder="Choss a clubs" formControlName= "clubName">
-          <mat-option *ngFor= "let club of clublist" [value]="club.id">
-             {{club.clubName}}
-          </mat-option>
-        </mat-select>
-        <mat-form-field style="width:100%;margin-top: 4px">
+        <mat-form-field style="width:100%">
+          <mat-select placeholder="Choss a clubs" formControlName="playerclubName" 
+          (selectionChange) = "clubNameChanged($event.value)">
+            <mat-option *ngFor= "let club of clublist" [value]="club.id">
+              {{club.clubName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field style="width:100%;margin-top:4px">
           <input matInput placeholder="Player Name" formControlName="playerName"/>
           <mat-error>
             Player Name required
           </mat-error>
         </mat-form-field>
-        <input mat-file type="file" formControlName = "file"/>
-        <button mat-button style="width: 100%;margin-top: 15px"
+        <input mat-file type="file" formControlName = "file" 
+        (change) = "onFileSelected($event)"
+        />
+        <div *ngIf="!playerForm.controls['file'].valid && playerForm.controls['file'].touched"
+        style="font-size: 12px; color: red">
+        File Format must be jpg or png
+       </div>
+        <button mat-button style="width: 100%;margin-top:15px"
         [disabled]="playerForm.invalid || playerForm.prestine"
         >Insert Player</button>
       </form>
     </mat-card>
     <mat-card style="margin-top:15px">
-      <mat-card-header>
-          kan     
+      <mat-card-header>             
       </mat-card-header>
-      <img style="border-radius:50%" id = "playerImage" [src] ="imageSrc || 'http://placehold.it/180'"
+      <img style="border-radius:50%" id = "playerImage" [src] ="playerImage || 'http://placehold.it/180'"
        alt="player picture" alt="Avatar"/> 
     </mat-card>
   </div>

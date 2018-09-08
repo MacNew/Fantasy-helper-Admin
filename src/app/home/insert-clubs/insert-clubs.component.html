@@ -5,8 +5,8 @@ fxLayoutGap="2%" fxLayoutAlign="center">
     <mat-card>
       <form (ngSubmit)="onSubmit()" [formGroup]="clubForm">
         <mat-form-field style="width: 100%">
-            <input matInput placeholder="Club Name" formControlName = "clubName" [(ngModel)] = "clubLogoName"/>
-            <mat-error>Club name is required</mat-error>
+           <input matInput placeholder="Club Name" formControlName = "clubName" [(ngModel)] = "clubLogoName"/>
+           <mat-error>Club name is required</mat-error>
           </mat-form-field>
           <mat-form-field style="width: 100%">
             <mat-select placeholder = "Is Current Playing" 
