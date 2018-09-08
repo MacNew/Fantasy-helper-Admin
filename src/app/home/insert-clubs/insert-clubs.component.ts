@@ -21,7 +21,6 @@ export class InsertClubsComponent implements OnInit{
   displayedColumns:string[] = [
     'fileName','clubName','isCurrentSeasonPlaying'
   ];
-  
   clubLogoName: string = "";
   imageSrc: string;
   clubsDetails : any[];
@@ -34,7 +33,7 @@ export class InsertClubsComponent implements OnInit{
   ],
   isCurrentPlaying: ['', Validators.required],
 }
-  public clubForm: FormGroup;
+  private clubForm: FormGroup;
   selectedFile = null;
   private onDestroy$ = new Subject<void>();
   constructor(

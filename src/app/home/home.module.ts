@@ -4,11 +4,12 @@ import { MyOwnCustomMaterialModule } from '../material'
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';  
 import { BrowserModule } from '@angular/platform-browser';
+import { InsertPlayerComponent } from './insert-player/insert-player.component';
 
 
 @NgModule({
     declarations: [ 
-        homeComponents
+        homeComponents, InsertPlayerComponent
     ],
     imports: [
         HomeRoutingModule,
