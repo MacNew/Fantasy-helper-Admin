@@ -17,6 +17,7 @@ import { forkJoin,Subject } from 'rxjs'
   styleUrls: ['./insert-player.component.css']
 })
 export class InsertPlayerComponent implements OnInit {
+  clubName: string;
   private onDestroy$ = new Subject<void>();
   playerdetails = new MatTableDataSource();
   displayedColumns:string[] = [
@@ -68,11 +69,12 @@ export class InsertPlayerComponent implements OnInit {
       this.playerdetails.data = res;
     });
   }
-
+  
   clubNameChanged(event) {
     this.springService.getFileName(event).pipe(
       catchError(this.handleError.errorHandling),
         switchMap((res: any) => {
+          this.clubName = res.clubName;
           return forkJoin(this.springService.downloadFile(res['fileName'])
            ,this.springService.get('/get/player/'+this.playerForm.value.playerclubName.toString())
            )
