@@ -15,7 +15,10 @@ const httpOptions = {
 
 export class SpringService {
   public clubListStateChange = new Subject<void>()
+  public playerListStateChange = new Subject<void>()
+  
   clublistStateChange$ = this.clubListStateChange.asObservable();
+  playerListStateChange$ = this.playerListStateChange.asObservable();
   baseUrl:string = 'fantasyhelper/api';
   constructor(private http: HttpClient) { 
   }
