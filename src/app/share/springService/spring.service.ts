@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams, HttpRequest } from '@angular/common/http'; 
 import { Clubs } from '../clubname';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 
 const httpOptions = {
   headers: new HttpHeaders({
     'Authorization': 'Token '+localStorage.getItem('token')
   })
 };
-
-
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +27,15 @@ export class SpringService {
     formData.append('isPlaying', club.isPlaying);
     return this.http.post(this.baseUrl+'/insert/clubs', formData ,httpOptions); 
   }
+  
+  public post(db:string,data:any) : Observable<any> {
+     return this.http.post(this.baseUrl+db,data,httpOptions)
+  }
 
+  public get(db:string): Observable<any> {
+    return this.http.get(this.baseUrl+db,httpOptions);
+  }
+ 
   public getAllClubs(): any {
     return this.http.get(this.baseUrl+"/currentseason/get/clubs",httpOptions);
   }
@@ -37,11 +43,13 @@ export class SpringService {
   public getFileName(club_id: any) {
    return this.http.get(this.baseUrl+"/fileName/"+club_id,httpOptions);
   }
+
   public downloadFile(fileName: string) {
     return this.http.get(this.baseUrl+"/downloadFile/"+fileName,{
       headers: new HttpHeaders().set('Authorization','Token '+localStorage.getItem('token')),
       responseType: 'blob'
     })
   }
+
 }
 

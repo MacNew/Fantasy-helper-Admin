@@ -5,7 +5,7 @@ fxLayoutGap="2%" fxLayoutAlign="center">
     <mat-grid-list cols="2" rowHeight="50px">
       <mat-grid-tile>
         <img style="border-radius:50%" id = "playerImage" [src] ="clubImage || 'http://placehold.it/180'"
-        alt="Club picture" height="50px" width="50px"/>    
+        alt="Club picture" height="45px" width="45px"/>    
       </mat-grid-tile>
       <mat-grid-tile>
        Insert Player
@@ -13,7 +13,7 @@ fxLayoutGap="2%" fxLayoutAlign="center">
     </mat-grid-list> 
     <p>
     <mat-card>
-      <form [formGroup]="playerForm">
+      <form [formGroup]="playerForm" (ngSubmit)="onSubmit()">
         <mat-form-field style="width:100%">
           <mat-select placeholder="Choss a clubs" formControlName="playerclubName" 
           (selectionChange) = "clubNameChanged($event.value)">
@@ -48,6 +48,22 @@ fxLayoutGap="2%" fxLayoutAlign="center">
     </mat-card>
   </div>
  <div fxFlex= "50%" style="align-items: center">
-    <p style="margin:5%;margin-left: 35%">Player list</p>
+  <p style="margin:5%; margin-left: 35%; margin-top:55px">Player list</p>
+    <table mat-table [dataSource] = "playerdetails" class="mat-elevation-z8">
+      <ng-container matColumnDef = "fileName">
+        <th mat-header-cell *matHeaderCellDef>Logo</th>
+        <td mat-cell *matCellDef="let element">
+            <img src= "assets/outside-assets/{{element.fileName}}"
+            alt="assets/outside-assets/{{element.fileName}}"
+            height="100px" width="100px">
+        </td>
+      </ng-container>
+      <ng-container matColumnDef= "playerName">
+        <th mat-header-cell *matHeaderCellDef> Player Name</th>
+        <td mat-cell *matCellDef="let element"> {{element.playerName}} </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef= "displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns">  
+    </table>
   </div>
 </div>
