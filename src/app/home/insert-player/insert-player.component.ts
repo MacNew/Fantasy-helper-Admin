@@ -89,6 +89,10 @@ export class InsertPlayerComponent implements OnInit {
        this.messageService.showMessage(error.message);
     });
   }
+  applyFilter(filterValue: any) {
+    this.playerdetails.filter = filterValue.trim().toLowerCase();
+
+  }
 
   onSubmit() {
    let formData: FormData = new FormData();
