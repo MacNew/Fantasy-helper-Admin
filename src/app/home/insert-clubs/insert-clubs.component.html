@@ -43,6 +43,7 @@ fxLayoutGap="2%" fxLayoutAlign="center">
   </div>
   <div fxFlex="50%" style="align-items: center">
     <p style="margin:5%; margin-left: 35%">Club list</p>
+    <perfect-scrollbar style="max-width:600px; max-height:500px;" [config]="config">
     <table mat-table [dataSource] = "clubdetails" class="mat-elevation-z8">
       <ng-container matColumnDef = "fileName">
         <th mat-header-cell *matHeaderCellDef>Logo</th>
@@ -63,5 +64,6 @@ fxLayoutGap="2%" fxLayoutAlign="center">
       <tr mat-header-row *matHeaderRowDef= "displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns">  
     </table>
+  </perfect-scrollbar>
   </div>
 </div>
