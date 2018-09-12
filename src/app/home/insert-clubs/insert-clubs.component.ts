@@ -9,6 +9,7 @@ import { CustomValidators } from '../../validators/custom-validators';
 import { MatTableDataSource } from '@angular/material';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-insert-clubs',
@@ -19,7 +20,7 @@ import { Subject } from 'rxjs';
 export class InsertClubsComponent implements OnInit{
   clubdetails = new MatTableDataSource();
   displayedColumns:string[] = [
-    'fileName','clubName','isCurrentSeasonPlaying'
+    'fileName','clubName','isCurrentSeasonPlaying', 'action'
   ];
   clubLogoName: string = "";
   imageSrc: string;
@@ -41,6 +42,8 @@ export class InsertClubsComponent implements OnInit{
     private messageService: MessageService,
     private springService: SpringService,
     private handleError: HttperrorresponseService,
+    private router: Router,
+    private route: ActivatedRoute
     
   ) { 
     this.clubForm = this.formBilder.group(this.myClubForm);
@@ -48,6 +51,18 @@ export class InsertClubsComponent implements OnInit{
        this.getClubList();    
     });
 
+    route.params.subscribe(val => {
+      if (this.route.snapshot.url[1] && this.route.snapshot.url[1].path === 'edit') {
+        this.springService.get('/getclubName/' + this.route.snapshot.paramMap.get('id'))
+        .subscribe((data) => {
+          data.isCurrentPlaying = data['currentSeasonPlaying'].toString();
+          this.clubForm.patchValue(data);
+        }, (error) => {
+          console.log(error);
+        });
+      }
+      this.getClubList();
+    });
   }
 
   onSubmit() {
@@ -77,7 +92,7 @@ export class InsertClubsComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.getClubList();
+
   }
 
   getClubList() {
@@ -88,5 +103,9 @@ export class InsertClubsComponent implements OnInit{
     }, error => {
       this.messageService.showMessage(error.message.error.erroMessage);
     });
+  }
+
+  updateClub(club) {
+    this.router.navigate([ '/home/insertclubs/edit/' + club.id ]);
   }
 }

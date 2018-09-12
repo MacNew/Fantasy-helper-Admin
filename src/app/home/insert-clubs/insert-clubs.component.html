@@ -41,7 +41,7 @@ fxLayoutGap="2%" fxLayoutAlign="center">
       <img id = "club_pic" [src] ="imageSrc || 'http://placehold.it/180'" alt="Club logo"/> 
     </mat-card>
   </div>
-  <div fxFlex="50%" style="align-items: center">
+  <div fxFlex="65%" style="align-items: center">
     <p style="margin:5%; margin-left: 35%">Club list</p>
     <table mat-table [dataSource] = "clubdetails" class="mat-elevation-z8">
       <ng-container matColumnDef = "fileName">
@@ -57,9 +57,28 @@ fxLayoutGap="2%" fxLayoutAlign="center">
         <td mat-cell *matCellDef="let element"> {{element.clubName}} </td>
       </ng-container>
       <ng-container matColumnDef= "isCurrentSeasonPlaying">
-          <th mat-header-cell *matHeaderCellDef> Club Name</th>
+          <th mat-header-cell *matHeaderCellDef> Game Status</th>
           <td mat-cell *matCellDef="let element"> {{element.isCurrentSeasonPlaying}} </td>
       </ng-container>
+    <ng-container matColumnDef= "action">
+        <th mat-header-cell *matHeaderCellDef> Action</th>
+        <td mat-cell *matCellDef="let element">
+             <button mat-icon-button [matMenuTriggerFor]="menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="updateClub(element)">
+                <mat-icon>edit</mat-icon>
+                <span>Edit</span>
+              </button>
+              <button mat-menu-item disabled>
+                <mat-icon>delete</mat-icon>
+                <span>Delete</span>
+              </button>
+            </mat-menu>
+        </td>
+       
+    </ng-container>
       <tr mat-header-row *matHeaderRowDef= "displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns">  
     </table>

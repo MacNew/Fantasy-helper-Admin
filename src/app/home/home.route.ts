@@ -17,6 +17,11 @@ const routes: Routes = [
           canActivate : [AuthGuard]
         },
         {
+          path:'insertclubs/edit/:id',
+          component: InsertClubsComponent,
+          canActivate : [AuthGuard]
+        },
+        {
          path: 'insertplayer',
          component: InsertPlayerComponent,
          canActivate: [AuthGuard]

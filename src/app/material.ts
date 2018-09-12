@@ -7,19 +7,20 @@ import { MatCardModule, MatIconModule, MatToolbarModule, MatTableModule } from '
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatSelectModule } from '@angular/material/select';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
     imports: [ MatFormFieldModule, MatButtonModule, 
         FormsModule,MatSidenavModule,MatListModule,
         MatInputModule, MatCardModule, MatIconModule,
         MatToolbarModule,FlexLayoutModule,MatSelectModule,
-        MatTableModule,MatGridListModule
+        MatTableModule,MatGridListModule, MatMenuModule
     ],
     exports: [MatButtonModule, MatFormFieldModule,MatListModule, 
         FormsModule, MatInputModule,MatSidenavModule, 
         MatSnackBarModule,MatCardModule, MatIconModule,
         MatToolbarModule,FlexLayoutModule,MatSelectModule,MatTableModule
-        ,MatGridListModule
+        ,MatGridListModule, MatMenuModule
     ]
 })
 export class MyOwnCustomMaterialModule {
