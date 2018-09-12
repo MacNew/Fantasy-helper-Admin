@@ -14,6 +14,13 @@ import { MessageService } from './share/message.service';
 import { AuthGuard } from './auth.guard';
 import { LayoutModule } from '@angular/cdk/layout';
 import { FantasyHelperNavComponent } from './fantasy-helper-nav/fantasy-helper-nav.component'
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
+import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
+  suppressScrollX: true
+};
+
 @NgModule({
   declarations: [
    AppComponent,
@@ -28,9 +35,13 @@ import { FantasyHelperNavComponent } from './fantasy-helper-nav/fantasy-helper-n
     AppRoutingModule,
     HttpClientModule,
     LayoutModule,
-    HomeModule
+    HomeModule,
+    PerfectScrollbarModule
   ],
-  providers: [ AuthService, SpringService, HttperrorresponseService, AuthGuard,MessageService ],
+  providers: [ {
+    provide: PERFECT_SCROLLBAR_CONFIG,
+    useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
+  },AuthService, SpringService, HttperrorresponseService, AuthGuard,MessageService ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

@@ -5,6 +5,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';  
 import { BrowserModule } from '@angular/platform-browser';
 import { InsertPlayerComponent } from './insert-player/insert-player.component';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
+import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
+    suppressScrollX: true
+  };
 
 
 @NgModule({
@@ -16,8 +22,14 @@ import { InsertPlayerComponent } from './insert-player/insert-player.component';
         ReactiveFormsModule,
         CommonModule,
         BrowserModule,  
-        MyOwnCustomMaterialModule
+        MyOwnCustomMaterialModule,
+        PerfectScrollbarModule
     ],
+    providers: [
+        {
+          provide: PERFECT_SCROLLBAR_CONFIG,
+          useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
+        }],
     exports: []
 })
 export class HomeModule {

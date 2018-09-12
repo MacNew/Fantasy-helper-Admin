@@ -38,18 +38,30 @@ fxLayoutGap="2%" fxLayoutAlign="center">
       <mat-card-header>
         <mat-card-title>{{clubLogoName}}</mat-card-title>
       </mat-card-header>
-      <img id = "club_pic" [src] ="imageSrc || 'http://placehold.it/180'" alt="Club logo"/> 
+      <img [src] ="imageSrc || 'http://placehold.it/180'" alt="Club logo"
+      height="100px" width="100px"
+      /> 
     </mat-card>
   </div>
   <div fxFlex="65%" style="align-items: center">
     <p style="margin:5%; margin-left: 35%">Club list</p>
-    <table mat-table [dataSource] = "clubdetails" class="mat-elevation-z8">
+    <perfect-scrollbar style="max-width:600px; max-height:500px;" [config]="config"
+    class="fullWidth"
+    >
+      <mat-form-field style="width: 100%">
+        <input matInput (keyup)="applyFilter($event.target.value)" 
+        class="fullWidth"
+        placeholder="Filter by club Name">
+      </mat-form-field>
+    <table mat-table [dataSource] = "clubdetails" class="mat-elevation-z8"
+    style="width: 100%;"
+    >
       <ng-container matColumnDef = "fileName">
         <th mat-header-cell *matHeaderCellDef>Logo</th>
         <td mat-cell *matCellDef="let element">
             <img src= "assets/outside-assets/{{element.fileName}}"
             alt="assets/outside-assets/{{element.fileName}}"
-            height="100px" width="100px">
+            height="75px" width="75px">
         </td>
       </ng-container>
       <ng-container matColumnDef= "clubName">
@@ -82,5 +94,6 @@ fxLayoutGap="2%" fxLayoutAlign="center">
       <tr mat-header-row *matHeaderRowDef= "displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns">  
     </table>
+  </perfect-scrollbar>
   </div>
 </div>

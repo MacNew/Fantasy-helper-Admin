@@ -64,6 +64,9 @@ export class InsertClubsComponent implements OnInit{
       this.getClubList();
     });
   }
+  applyFilter(filterValue: any) {
+    this.clubdetails.filter = filterValue.trim().toLowerCase();
+  }
 
   onSubmit() {
     if (this.clubForm.valid) {
