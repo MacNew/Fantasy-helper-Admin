@@ -10,6 +10,8 @@ import { MatTableDataSource } from '@angular/material';
 import { takeUntil,map } from 'rxjs/operators';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { forkJoin,Subject } from 'rxjs'
+import { HttpClient, HttpHeaders } from '@angular/common/http'; 
+
 
 @Component({
   selector: 'app-insert-player',
@@ -54,7 +56,7 @@ export class InsertPlayerComponent implements OnInit {
   }
 
   assignedClubName() {
-     this.springService.getAllClubs()
+     this.springService.get('/currentseason/get/clubs')
      .subscribe((data:any)=>{
       data.forEach(element => {
         this.clublist.push(Object.assign({clubName: element.clubName,id:element.id}));
@@ -69,16 +71,22 @@ export class InsertPlayerComponent implements OnInit {
       this.playerdetails.data = res;
     });
   }
+
+  lopt = {
+    headers: new HttpHeaders().set('Authorization','Token '+localStorage.getItem('token')),
+    responseType: 'blob'
+  }
   
   clubNameChanged(event) {
-    this.springService.getFileName(event).pipe(
+    this.springService.get("/fileName/"+event).pipe(
       catchError(this.handleError.errorHandling),
         switchMap((res: any) => {
           this.clubName = res.clubName;
-          return forkJoin(this.springService.downloadFile(res['fileName'])
-           ,this.springService.get('/get/player/'+this.playerForm.value.playerclubName.toString())
-           )
-         })
+          return forkJoin(this.springService.get("/downloadFile/"+res['fileName'],
+          {
+            headers: new HttpHeaders().set('Authorization','Token '+localStorage.getItem('token')),
+            responseType: 'blob'
+          }),this.springService.get('/get/player/'+this.playerForm.value.playerclubName.toString()))})
        ).subscribe((res:any)=>{
          let UrlCreator = window.URL;
          this.clubImage = this.sanitizer.bypassSecurityTrustUrl(
@@ -91,7 +99,6 @@ export class InsertPlayerComponent implements OnInit {
   }
   applyFilter(filterValue: any) {
     this.playerdetails.filter = filterValue.trim().toLowerCase();
-
   }
 
   onSubmit() {
