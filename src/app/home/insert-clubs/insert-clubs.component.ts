@@ -70,11 +70,11 @@ export class InsertClubsComponent implements OnInit{
 
   onSubmit() {
     if (this.clubForm.valid) {
-      const club: Clubs = {
-        'clubName': this.clubForm.value.clubName,
-        'isPlaying': this.clubForm.value.isCurrentPlaying, 
-      }
-       this.springService.insertClubName(club, this.selectedFile).pipe(
+      var formDate: FormData = new FormData();
+      formDate.append('file', this.selectedFile);
+      formDate.append('clubName', this.clubForm.value.clubName);
+      formDate.append('isPlaying', this.clubForm.value.isCurrentPlaying);      
+       this.springService.post('/insert/clubs',formDate).pipe(
         catchError(this.handleError.errorHandling)
        ).subscribe(res => {
          this.messageService.showMessage('Club inserted '+ this.clubForm.value.clubName);
@@ -99,7 +99,7 @@ export class InsertClubsComponent implements OnInit{
   }
 
   getClubList() {
-    this.springService.getAllClubs().pipe(
+    this.springService.get('/currentseason/get/clubs').pipe(
       catchError(this.handleError.errorHandling)
     ).subscribe(res => {
       this.clubdetails.data = res;
