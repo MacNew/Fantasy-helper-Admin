@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators,FormBuilder, AbstractControl } from '@angular/forms';
 import { MessageService } from '../../share/message.service'
 import { SpringService } from '../../share/springService/spring.service'
-import { Clubs } from '../../share/clubname';
 import { HttperrorresponseService } from '../../share/httpErrorHandlingService/httperrorresponse.service'
 import { catchError, switchMap, mergeMap } from 'rxjs/operators';
 import { CustomValidators } from '../../validators/custom-validators';
@@ -11,7 +10,6 @@ import { takeUntil,map } from 'rxjs/operators';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { forkJoin,Subject } from 'rxjs'
 import { HttpClient, HttpHeaders } from '@angular/common/http'; 
-
 
 @Component({
   selector: 'app-insert-player',
@@ -72,11 +70,6 @@ export class InsertPlayerComponent implements OnInit {
     });
   }
 
-  lopt = {
-    headers: new HttpHeaders().set('Authorization','Token '+localStorage.getItem('token')),
-    responseType: 'blob'
-  }
-  
   clubNameChanged(event) {
     this.springService.get("/fileName/"+event).pipe(
       catchError(this.handleError.errorHandling),

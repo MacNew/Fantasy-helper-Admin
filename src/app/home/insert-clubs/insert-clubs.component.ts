@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators,FormBuilder, AbstractControl } from '@angular/forms';
 import { MessageService } from '../../share/message.service'
 import { SpringService } from '../../share/springService/spring.service'
-import { Clubs } from '../../share/clubname';
 import { HttperrorresponseService } from '../../share/httpErrorHandlingService/httperrorresponse.service'
 import { catchError } from 'rxjs/operators';
 import { CustomValidators } from '../../validators/custom-validators';
@@ -69,12 +68,21 @@ export class InsertClubsComponent implements OnInit{
   }
 
   onSubmit() {
-    if (this.clubForm.valid) {
+    var clubId = this.route.snapshot.url[(this.route.snapshot.url.length-1)].path;
+    if (this.clubForm.valid) { 
       var formDate: FormData = new FormData();
+      var clubId = this.route.snapshot.url[(this.route.snapshot.url.length-1)].path;
+      var insertOrEdit;
+      clubId === 'insertclubs' ? '':formDate.append('clubId', clubId);
       formDate.append('file', this.selectedFile);
       formDate.append('clubName', this.clubForm.value.clubName);
-      formDate.append('isPlaying', this.clubForm.value.isCurrentPlaying);      
-       this.springService.post('/insert/clubs',formDate).pipe(
+      formDate.append('isPlaying', this.clubForm.value.isCurrentPlaying);
+      if (clubId === 'insertclubs') {
+        insertOrEdit = this.springService.post('/insert/clubs',formDate);
+      } else {
+        insertOrEdit = this.springService.put('/edit/clubs', formDate); 
+      }
+      insertOrEdit.pipe(
         catchError(this.handleError.errorHandling)
        ).subscribe(res => {
          this.messageService.showMessage('Club inserted '+ this.clubForm.value.clubName);
@@ -83,7 +91,7 @@ export class InsertClubsComponent implements OnInit{
          this.springService.clubListStateChange.next();
        }, error => {
         this.messageService.showMessage(error.message.error.erroMessage);
-       });
+       });       
       }
   }
   

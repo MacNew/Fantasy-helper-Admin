@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'; 
-import { Clubs } from '../clubname';
 import { Subject, Observable } from 'rxjs';
 
 const httpOptions = {
@@ -22,7 +21,6 @@ export class SpringService {
   constructor(private http: HttpClient) { 
   }
 
-  
   public post(db:string,data:any,opts?:any) : Observable<any> {
      return this.http.post(this.baseUrl+db,data,httpOptions)
   }
@@ -31,7 +29,11 @@ export class SpringService {
     opts != null ? (opts = opts) : (opts = httpOptions);
     return this.http.get(this.baseUrl+db,opts);
   }
- 
 
+  public put(db:string, data: any, opts?: any): Observable<any> {
+    opts != null ? (opts = opts) : (opts = httpOptions);
+    return this.http.put(this.baseUrl+db,data, opts );
+  }
+ 
 }
 
