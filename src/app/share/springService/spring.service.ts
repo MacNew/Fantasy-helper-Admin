@@ -34,6 +34,11 @@ export class SpringService {
     opts != null ? (opts = opts) : (opts = httpOptions);
     return this.http.put(this.baseUrl+db,data, opts );
   }
+  
+  public delete(db:string,opts?: any): Observable<any> {
+    opts != null ? (opts = opts) : (opts = httpOptions);
+    return this.http.delete(this.baseUrl+db,opts);
+  }
  
 }
 
