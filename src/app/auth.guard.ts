@@ -39,6 +39,7 @@ export class AuthGuard implements CanActivate {
     // Insert Clubs Authenticated
      if (route.url[0].path ==='insertclubs'
       || route.url[0].path === 'insertplayer'
+      || route.url[0].path === 'season'
      ) {
       if (this.authService.isAdmin()) {
         return true;
