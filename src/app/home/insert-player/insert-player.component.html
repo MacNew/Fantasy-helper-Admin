@@ -22,11 +22,16 @@ fxLayoutGap="2%" fxLayoutAlign="center">
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-form-field style="width:100%;margin-top:4px">
+        <mat-form-field style="width:100%;">
           <input matInput placeholder="Player Name" formControlName="playerName"/>
           <mat-error>
             Player Name required
           </mat-error>
+        </mat-form-field>
+        <mat-form-field style="width:100%">
+          <mat-select placeholder="Player Position" formControlName="playerPosition">
+            <mat-option *ngFor="let position of playerPositions" [value]="position.value">{{position.viewValue}}</mat-option>
+          </mat-select>
         </mat-form-field>
         <input mat-file type="file" formControlName = "file" 
         (change) = "onFileSelected($event)"
@@ -67,6 +72,10 @@ fxLayoutGap="2%" fxLayoutAlign="center">
       <ng-container matColumnDef= "playerName">
         <th mat-header-cell *matHeaderCellDef> Player Name</th>
         <td mat-cell *matCellDef="let element"> {{element.playerName}} </td>
+      </ng-container>
+      <ng-container matColumnDef= "playerPosition">
+        <th mat-header-cell *matHeaderCellDef> Player Position</th>
+        <td mat-cell *matCellDef="let element"> {{element.playerPosition}} </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef= "displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns">  
