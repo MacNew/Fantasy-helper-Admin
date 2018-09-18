@@ -9,7 +9,7 @@ import { MatTableDataSource } from '@angular/material';
 import { takeUntil,map } from 'rxjs/operators';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { forkJoin,Subject } from 'rxjs'
-import { HttpClient, HttpHeaders } from '@angular/common/http'; 
+import { HttpHeaders } from '@angular/common/http'; 
 
 @Component({
   selector: 'app-insert-player',

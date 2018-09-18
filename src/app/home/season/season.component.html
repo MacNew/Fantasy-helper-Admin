@@ -12,22 +12,22 @@ fxLayoutGap="2%" fxLayoutAlign="center">
           </mat-form-field>
           <mat-form-field class="style-width">
             <mat-select placeholder="Winer Clubs">
-              <mat-option>
-                Arsenal
+              <mat-option *ngFor= "let club of clublist" [value]="club.id">
+                {{club.clubName}}
               </mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field class="style-width">
             <mat-select placeholder="Runner up Clubs">
-              <mat-option>
-                Manchester United
+              <mat-option *ngFor= "let club of clublist" [value]="club.id">
+                {{club.clubName}}
               </mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field class="style-width">
-            <mat-select placeholder=" Top scorers ">
-              <mat-option>
-                Ozil
+            <mat-select placeholder=" Top Forwards ">
+              <mat-option *ngFor= "let player of forwardPlayerlist" [value]="player.id">
+                {{player.playerName}}
               </mat-option>
             </mat-select>
           </mat-form-field>
