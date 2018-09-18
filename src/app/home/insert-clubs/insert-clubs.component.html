@@ -83,7 +83,7 @@ fxLayoutGap="2%" fxLayoutAlign="center">
                 <mat-icon>edit</mat-icon>
                 <span>Edit</span>
               </button>
-              <button mat-menu-item disabled>
+              <button mat-menu-item (click)="deleteClick(element)">
                 <mat-icon>delete</mat-icon>
                 <span>Delete</span>
               </button>

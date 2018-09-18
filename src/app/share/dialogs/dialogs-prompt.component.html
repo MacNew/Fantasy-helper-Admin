@@ -1,0 +1,15 @@
+<mat-dialog-content>
+  <p *ngIf="showMainParagraph" i18n>
+    Are you sure you want to {data.changeType, select, delete {delete}} the following {data.type, select, club {club}}
+  </p>
+  <div class="alert alert-danger" *ngIf="message">
+    {{message}}
+    <button type="button" class="close" (click)="closeAlert()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button color="primary" mat-raised-button (click)="ok()" i18n>OK</button>
+  <button color="warn" mat-raised-button mat-dialog-close *ngIf="cancelable" i18n>Cancel</button>
+</mat-dialog-actions>
