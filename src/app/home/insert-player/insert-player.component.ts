@@ -75,7 +75,6 @@ export class InsertPlayerComponent implements OnInit {
   }
 
   playerStageChange() {
-    console.log('calling me'+this.playerForm.value.playerclubName.toString());
     this.springService.get('/get/player/'+this.playerForm.value.playerclubName.toString())
     .subscribe(res=>{
       this.playerdetails.data = res;
@@ -97,7 +96,7 @@ export class InsertPlayerComponent implements OnInit {
          this.clubImage = this.sanitizer.bypassSecurityTrustUrl(
          UrlCreator.createObjectURL(res[0]))
          this.playerdetails.data = res[1];
-         console.log(res[1]);
+         
     }, error=>{
        this.messageService.showMessage(error.message);
     });
