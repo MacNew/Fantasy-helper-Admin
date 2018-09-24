@@ -1,10 +1,10 @@
 <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap 
 fxLayoutGap="2%" fxLayoutAlign="center">
  <div fxFlex="50%">
-  <p style="margin:5%">
+  <p class="m-5">
     <mat-grid-list cols="2" rowHeight="50px">
       <mat-grid-tile>
-        <img style="border-radius:50%" id = "playerImage" [src] ="clubImage || 'http://placehold.it/180'"
+        <img class="radius-50" id = "playerImage" [src] ="clubImage || 'http://placehold.it/180'"
         alt="Club picture" height="45px" width="45px"/>    
       </mat-grid-tile>
       <mat-grid-tile>
@@ -14,7 +14,7 @@ fxLayoutGap="2%" fxLayoutAlign="center">
     <p>
     <mat-card>
       <form [formGroup]="playerForm" (ngSubmit)="onSubmit()">
-        <mat-form-field style="width:100%">
+        <mat-form-field class="w-100">
           <mat-select placeholder="Choss a clubs" formControlName="playerclubName" 
           (selectionChange) = "clubNameChanged($event.value)">
             <mat-option *ngFor= "let club of clublist" [value]="club.id">
@@ -22,7 +22,7 @@ fxLayoutGap="2%" fxLayoutAlign="center">
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-form-field style="width:100%;">
+        <mat-form-field class="w-100" style="margin-top:4px">
           <input matInput placeholder="Player Name" formControlName="playerName"/>
           <mat-error>
             Player Name required
@@ -36,31 +36,31 @@ fxLayoutGap="2%" fxLayoutAlign="center">
         <input mat-file type="file" formControlName = "file" 
         (change) = "onFileSelected($event)"
         />
-        <div *ngIf="!playerForm.controls['file'].valid && playerForm.controls['file'].touched"
-        style="font-size: 12px; color: red">
+        <div class="error" *ngIf="!playerForm.controls['file'].valid && playerForm.controls['file'].touched"
+        >
         File Format must be jpg or png
        </div>
-        <button mat-button style="width: 100%;margin-top:15px"
+        <button id="insert-player-button" mat-button class="w-100"
         [disabled]="playerForm.invalid || playerForm.prestine"
         >Insert Player</button>
       </form>
     </mat-card>
-    <mat-card style="margin-top:15px">
+    <mat-card class="text-center">
       <mat-card-header>             
       </mat-card-header>
-      <img style="border-radius:50%" id = "playerImage" 
+      <img class="radius-50" id = "playerImage" 
       [src] ="playerImage || 'http://placehold.it/180'"
        alt="player picture" alt="Avatar" height="75px" width="75px"/> 
     </mat-card>
   </div>
- <div fxFlex= "50%" style="align-items: center">
-  <p style="margin:5%; margin-left: 35%; margin-top:55px">Player list</p>
-  <perfect-scrollbar style="max-width:600px; max-height:400px;" [config]="config">
-   <mat-form-field style="width: 100%">
+ <div fxFlex= "50%" class="text-center">
+  <p class="m-5" id="player-list-title">Player list</p>
+  <perfect-scrollbar id="player-scrollbar" [config]="config">
+   <mat-form-field class="w-100">
      <input matInput (keyup) = "applyFilter($event.target.value)" placeholder="Filter by player Name">
    </mat-form-field>
     <table mat-table [dataSource] = "playerdetails" 
-    style="width: 100%">
+    class="w-100">
       <ng-container matColumnDef = "fileName">
         <th mat-header-cell *matHeaderCellDef>Logo</th>
         <td mat-cell *matCellDef="let element">
