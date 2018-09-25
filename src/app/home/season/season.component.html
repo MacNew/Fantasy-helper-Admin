@@ -1,0 +1,62 @@
+<div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap 
+fxLayoutGap="2%" fxLayoutAlign="center">
+ <div fxFlex="50%" class="margin">
+   <p> Season Information </p>
+    <mat-card>
+      <form>
+          <mat-form-field class="style-width">
+            <input matInput placeholder="Season Name"/>
+            <mat-error>
+              Seasion Name is required
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="style-width">
+            <mat-select placeholder="Winer Clubs">
+              <mat-option *ngFor= "let club of clublist" [value]="club.id">
+                {{club.clubName}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="style-width">
+            <mat-select placeholder="Runner up Clubs">
+              <mat-option *ngFor= "let club of clublist" [value]="club.id">
+                {{club.clubName}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="style-width">
+            <mat-select placeholder=" Top Forwards ">
+              <mat-option *ngFor= "let player of forwardPlayerlist" [value]="player.id">
+                {{player.playerName}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="style-width">
+            <mat-select placeholder="Top Mid fielders">
+              <mat-option>
+                Ozil
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="style-width">
+            <mat-select placeholder="Top Defenders">
+              <mat-option>
+                Ozil
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="style-width">
+            <mat-select placeholder="Top Goal Keepers">
+              <mat-option>
+                Ozil
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button mat-button class="style-width">Insert Season Information</button>
+      </form>
+    </mat-card>
+  </div>
+ <div fxFlex= "50%" style="align-items: center">
+  
+  </div>
+</div>

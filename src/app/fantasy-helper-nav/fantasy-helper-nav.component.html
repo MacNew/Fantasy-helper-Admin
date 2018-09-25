@@ -10,7 +10,10 @@
     <mat-nav-list>
       <a mat-list-item routerLink = "">Home</a>
       <a mat-list-item routerLink = "insertclubs" *ngIf= "auth.isAdmin()">Insert Clubs</a>
-      <a mat-list-item routerLink = "insertplayer" *ngIf = "auth.isAdmin()">Insert Player</a> 
+      <a mat-list-item routerLink = "insertplayer" *ngIf = "auth.isAdmin()">Insert Player</a>
+     
+      <a mat-list-item routerLink = "season" *ngIf = "auth.isAdmin()">Season Information</a>
+       
       <a mat-list-item (click)="logout()">Logout</a>  
      </mat-nav-list>
   </mat-sidenav>
