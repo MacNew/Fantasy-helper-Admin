@@ -1,0 +1,24 @@
+language: node_js
+node_js:
+- "10.8.0"
+branches:
+only:
+- master
+adons:
+chrome: stable
+before_script:
+ - yarm global add @angular/cli
+ cache:
+ yarm: true
+ directories:
+ - node_modules
+ script:
+ - ng build --prod
+  
+deploy:
+ provider: pages
+ skip-cleanup: true
+ github-token: $GITHUB_TOKEN
+ keep-history: true
+ local-dir: ./dist/
+ on: 
