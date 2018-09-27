@@ -4,7 +4,7 @@ fxLayoutGap="2%" fxLayoutAlign="center">
    <p> Season Information </p>
    <perfect-scrollbar id="scrollbar" [config]="config" class="w-100">
       <mat-card>
-        <form [formGroup]="seasonForm">
+        <form (ngSubmit)="onSubmit()" [formGroup]="seasonForm">
           <mat-form-field class="style-width">
             <input matInput placeholder="Season Name"
             formControlName = "seasonName"
@@ -34,33 +34,44 @@ fxLayoutGap="2%" fxLayoutAlign="center">
             </mat-error>
           </mat-form-field>
           <mat-form-field class="style-width">
-            <mat-select placeholder=" Top Forwards ">
+            <mat-select placeholder=" Top Forwards " formControlName="forward">
               <mat-option *ngFor= "let player of forwardPlayerlist" [value]="player.id">
                 {{player.playerName}}
               </mat-option>
             </mat-select>
+            <mat-error>
+              This field is required
+            </mat-error>
           </mat-form-field>
           <mat-form-field class="style-width">
-            <mat-select placeholder="Top Mid fielders">
+            <mat-select placeholder="Top Mid fielders" formControlName="midfielder">
               <mat-option *ngFor= "let player of midfilderPlayerlist" [value]="player.id">
                 {{player.playerName}}
-              
               </mat-option>
             </mat-select>
+            <mat-error>
+              This field is required
+            </mat-error>
           </mat-form-field>
           <mat-form-field class="style-width">
-            <mat-select placeholder="Top Defenders">
+            <mat-select placeholder="Top Defenders" formControlName="defender">
               <mat-option *ngFor= "let player of defenderPlayerlist" [value]="player.id">
                 {{player.playerName}}
               </mat-option>
             </mat-select>
+            <mat-error>
+              This field is required
+            </mat-error>
           </mat-form-field>
           <mat-form-field class="style-width">
-            <mat-select placeholder="Top Goal Keepers">
+            <mat-select placeholder="Top Goal Keepers" formControlName="goalkeeper">
               <mat-option *ngFor= "let player of goalkeeperslist" [value]="player.id">
                 {{player.playerName}}
               </mat-option>
             </mat-select>
+            <mat-error>
+              This field is required
+            </mat-error>
           </mat-form-field>
           <button mat-button class="w-100 mt-15"
           [disabled]="seasonForm.invalid || seasonForm.prestine"
