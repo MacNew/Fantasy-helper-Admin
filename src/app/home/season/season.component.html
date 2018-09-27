@@ -2,59 +2,83 @@
 fxLayoutGap="2%" fxLayoutAlign="center">
  <div fxFlex="50%" class="margin">
    <p> Season Information </p>
-    <mat-card>
-      <form>
+   <perfect-scrollbar id="scrollbar" [config]="config" class="w-100">
+      <mat-card>
+        <form (ngSubmit)="onSubmit()" [formGroup]="seasonForm">
           <mat-form-field class="style-width">
-            <input matInput placeholder="Season Name"/>
+            <input matInput placeholder="Season Name"
+            formControlName = "seasonName"
+            />
             <mat-error>
               Seasion Name is required
             </mat-error>
           </mat-form-field>
           <mat-form-field class="style-width">
-            <mat-select placeholder="Winer Clubs">
+            <mat-select placeholder="Winer Clubs" formControlName="winerClub">
               <mat-option *ngFor= "let club of clublist" [value]="club.id">
                 {{club.clubName}}
               </mat-option>
             </mat-select>
+            <mat-error>
+              Winner Club and Runner up should not be same
+            </mat-error>
           </mat-form-field>
           <mat-form-field class="style-width">
-            <mat-select placeholder="Runner up Clubs">
+            <mat-select placeholder="Runner up Clubs" formControlName="runnerUpClub">
               <mat-option *ngFor= "let club of clublist" [value]="club.id">
                 {{club.clubName}}
               </mat-option>
             </mat-select>
+            <mat-error>
+              Winner Club and Runner up should not be same
+            </mat-error>
           </mat-form-field>
           <mat-form-field class="style-width">
-            <mat-select placeholder=" Top Forwards ">
+            <mat-select placeholder=" Top Forwards " formControlName="forward">
               <mat-option *ngFor= "let player of forwardPlayerlist" [value]="player.id">
                 {{player.playerName}}
               </mat-option>
             </mat-select>
+            <mat-error>
+              This field is required
+            </mat-error>
           </mat-form-field>
           <mat-form-field class="style-width">
-            <mat-select placeholder="Top Mid fielders">
-              <mat-option>
-                Ozil
+            <mat-select placeholder="Top Mid fielders" formControlName="midfielder">
+              <mat-option *ngFor= "let player of midfilderPlayerlist" [value]="player.id">
+                {{player.playerName}}
               </mat-option>
             </mat-select>
+            <mat-error>
+              This field is required
+            </mat-error>
           </mat-form-field>
           <mat-form-field class="style-width">
-            <mat-select placeholder="Top Defenders">
-              <mat-option>
-                Ozil
+            <mat-select placeholder="Top Defenders" formControlName="defender">
+              <mat-option *ngFor= "let player of defenderPlayerlist" [value]="player.id">
+                {{player.playerName}}
               </mat-option>
             </mat-select>
+            <mat-error>
+              This field is required
+            </mat-error>
           </mat-form-field>
           <mat-form-field class="style-width">
-            <mat-select placeholder="Top Goal Keepers">
-              <mat-option>
-                Ozil
+            <mat-select placeholder="Top Goal Keepers" formControlName="goalkeeper">
+              <mat-option *ngFor= "let player of goalkeeperslist" [value]="player.id">
+                {{player.playerName}}
               </mat-option>
             </mat-select>
+            <mat-error>
+              This field is required
+            </mat-error>
           </mat-form-field>
-          <button mat-button class="style-width">Insert Season Information</button>
+          <button mat-button class="w-100 mt-15"
+          [disabled]="seasonForm.invalid || seasonForm.prestine"
+          >Insert Season Information</button>
       </form>
     </mat-card>
+   </perfect-scrollbar>
   </div>
  <div fxFlex= "50%" style="align-items: center">
   

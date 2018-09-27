@@ -5,10 +5,12 @@ img {
 	margin-right: auto;
 	border-radius: 50%;
 }
+
 #scrollbar{
 	max-width:600px; 
 	max-height:500px;
 }
+
 .title{
 	margin:5%; 
 	margin-left: 35%

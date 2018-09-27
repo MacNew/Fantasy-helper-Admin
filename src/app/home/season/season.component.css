@@ -4,3 +4,8 @@
 .style-width {
     width: 100%;
 }
+
+#scrollbar{
+	max-width:600px; 
+	max-height:500px;
+}
