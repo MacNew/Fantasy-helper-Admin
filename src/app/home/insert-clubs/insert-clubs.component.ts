@@ -68,7 +68,6 @@ export class InsertClubsComponent implements OnInit{
   }
 
   onSubmit() {
-    var clubId = this.route.snapshot.url[(this.route.snapshot.url.length-1)].path;
     if (this.clubForm.valid) { 
       var formDate: FormData = new FormData();
       var clubId = this.route.snapshot.url[(this.route.snapshot.url.length-1)].path;
