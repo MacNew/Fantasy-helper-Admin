@@ -80,7 +80,46 @@ fxLayoutGap="2%" fxLayoutAlign="center">
     </mat-card>
    </perfect-scrollbar>
   </div>
- <div fxFlex= "50%" style="align-items: center">
-  
-  </div>
+ <div fxFlex="50%" class="margin">
+    <p id="title">Season list</p>
+      <mat-form-field class="w-100">
+        <input matInput (keyup)="applyFilter($event.target.value)" 
+        class="w-100"
+        placeholder="Filter by Season Name">
+      </mat-form-field>
+      <div class="scrollmenu">
+        <table mat-table [dataSource]="seasionDetails">      
+          <ng-container matColumnDef="seasonName">
+            <th mat-header-cell *matHeaderCellDef>Season Name</th>
+            <td mat-cell *matCellDef="let element">{{element.seasonName}}</td>
+          </ng-container>
+          <ng-container matColumnDef="winerClubName">
+              <th mat-header-cell *matHeaderCellDef>Winter Club</th>
+              <td mat-cell *matCellDef="let element">{{element.winerClubName}}</td>
+          </ng-container>
+          <ng-container matColumnDef="runnerUpClubName">
+              <th mat-header-cell *matHeaderCellDef>Runner up Club</th>
+              <td mat-cell *matCellDef="let element">{{element.runnerUpClubName}}</td>
+          </ng-container>
+          <ng-container matColumnDef="topScorer">
+              <th mat-header-cell *matHeaderCellDef>Top Scorer</th>
+              <td mat-cell *matCellDef="let element">{{element.topScorer}}</td>
+          </ng-container>
+          <ng-container matColumnDef="topMidFielder">
+              <th mat-header-cell *matHeaderCellDef>Top MidFilder</th>
+              <td mat-cell *matCellDef="let element">{{element.topMidFielder}}</td>
+          </ng-container>
+          <ng-container matColumnDef="topDefender">
+              <th mat-header-cell *matHeaderCellDef>Top Defender</th>
+              <td mat-cell *matCellDef="let element">{{element.topDefender}}</td>
+          </ng-container>
+          <ng-container matColumnDef="topGoalKepper">
+              <th mat-header-cell *matHeaderCellDef>Top topGoal keeper</th>
+              <td mat-cell *matCellDef="let element">{{element.topGoalKepper}}</td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef= "displayedColumns"></tr>
+          <tr mat-row *matRowDef= "let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+</div>
 </div>
