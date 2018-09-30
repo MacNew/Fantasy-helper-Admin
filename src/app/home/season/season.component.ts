@@ -5,6 +5,7 @@ import { CustomValidators } from '../../validators/custom-validators';
 import { MessageService } from '../../share/message.service'
 import { catchError } from 'rxjs/operators';
 import { HttperrorresponseService } from '../../share/httpErrorHandlingService/httperrorresponse.service'
+import { MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-season-first',
@@ -13,6 +14,10 @@ import { HttperrorresponseService } from '../../share/httpErrorHandlingService/h
 })
 
 export class Season implements OnInit {
+  seasionDetails = new MatTableDataSource();
+  displayedColumns:string[] = [
+    'seasonName','winerClubName','runnerUpClubName', 'topScorer','topMidFielder','topDefender','topGoalKepper'
+  ];
   clublist: clubDetails[] = [];
   forwardPlayerlist: playerDetails[] = [];
   midfilderPlayerlist: playerDetails[] = [];
@@ -34,7 +39,15 @@ export class Season implements OnInit {
     private messageService: MessageService,
     private handleError: HttperrorresponseService
     ) {
+    this.getSeasionList();
     this.seasonForm = this.formBilder.group(this.mySeasonForm);
+  }
+
+  public getSeasionList() {
+    this.springService.get('/season/getAll').subscribe(data=> {
+      this.seasionDetails.data = data;
+      console.log(data);
+    });
   }
 
   ngOnInit() {
@@ -103,6 +116,11 @@ export class Season implements OnInit {
     }, error=> this.messageService.showMessage(error.statusCode));
    }
  }
+
+ applyFilter(filterValue: any) {
+  this.seasionDetails.filter = filterValue.trim().toLowerCase();
+}
+
 }
 
 export interface clubDetails {
