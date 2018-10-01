@@ -3,14 +3,13 @@ import { FormGroup, Validators,FormBuilder, AbstractControl } from '@angular/for
 import { MessageService } from '../../share/message.service'
 import { SpringService } from '../../share/springService/spring.service'
 import { HttperrorresponseService } from '../../share/httpErrorHandlingService/httperrorresponse.service'
-import { catchError, switchMap, mergeMap } from 'rxjs/operators';
+import { catchError, switchMap } from 'rxjs/operators';
 import { CustomValidators } from '../../validators/custom-validators';
 import { MatTableDataSource } from '@angular/material';
-import { takeUntil,map } from 'rxjs/operators';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { takeUntil } from 'rxjs/operators';
+import { DomSanitizer } from '@angular/platform-browser';
 import { forkJoin,Subject } from 'rxjs'
 import { HttpHeaders } from '@angular/common/http'; 
-import { HttpClient } from '@angular/common/http'; 
 
 export interface Position {
   value: string;
