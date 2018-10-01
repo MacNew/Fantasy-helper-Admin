@@ -7,6 +7,7 @@ import { catchError } from 'rxjs/operators';
 import { HttperrorresponseService } from '../../share/httpErrorHandlingService/httperrorresponse.service'
 import { MatTableDataSource } from '@angular/material';
 import { SeasonService } from '../../share/seasonService';
+import { PlayerService } from '../../share/player.service';
 import { Subject } from 'rxjs'
 import { takeUntil } from 'rxjs/operators';
 
@@ -43,7 +44,8 @@ export class Season implements OnInit {
     private formBilder: FormBuilder,
     private messageService: MessageService,
     private handleError: HttperrorresponseService,
-    private seasonService: SeasonService
+    private seasonService: SeasonService,
+    private playerSerive: PlayerService
     ) {
       this.seasonForm = this.formBilder.group(this.mySeasonForm); 
       this.getSeasionList();
@@ -54,32 +56,32 @@ export class Season implements OnInit {
 
   public getSeasionList() {
     this.springService.get('/season/getAll').subscribe(data=> {
-      this.seasionDetails.data = data;
-      console.log(data);
+    this.seasionDetails.data = data;
     });
   }
 
   ngOnInit() {
     this.assignedClubName();
-    this.getPlayerlist('Forward').subscribe((data: any)=>{
+    
+    this.playerSerive.getPlayer('Forward').subscribe((data: any) => {
       data.forEach(element => {
         this.forwardPlayerlist.push(Object.assign({playerName: element.playerName, id:element.id}));
       });
     });
 
-    this.getPlayerlist('Midfielder').subscribe((data: any)=>{
+    this.playerSerive.getPlayer('Midfielder').subscribe((data: any) => {
       data.forEach(element => {
         this.midfilderPlayerlist.push(Object.assign({playerName: element.playerName, id:element.id}));
       });
     });
 
-    this.getPlayerlist('Defender').subscribe((data: any)=>{
+    this.playerSerive.getPlayer('Defender').subscribe((data: any) => {
       data.forEach(element => {
         this.defenderPlayerlist.push(Object.assign({playerName: element.playerName, id:element.id}));
       });
     });
 
-    this.getPlayerlist('GoalKeeper').subscribe((data: any)=>{
+    this.playerSerive.getPlayer('GoalKeeper').subscribe((data: any)=>{
       data.forEach(element => {
         this.goalkeeperslist.push(Object.assign({playerName: element.playerName, id:element.id}));
       });
@@ -94,10 +96,6 @@ export class Season implements OnInit {
        this.clublist.push(Object.assign({clubName: element.clubName,id:element.id}));
      });
     });
- }
-
- getPlayerlist(position) {
-  return this.springService.get('/getplayer/'+position);
  }
 
  onSubmit() { 
