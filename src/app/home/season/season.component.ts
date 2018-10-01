@@ -6,6 +6,10 @@ import { MessageService } from '../../share/message.service'
 import { catchError } from 'rxjs/operators';
 import { HttperrorresponseService } from '../../share/httpErrorHandlingService/httperrorresponse.service'
 import { MatTableDataSource } from '@angular/material';
+import { SeasonService } from '../../share/seasonService';
+import { Subject } from 'rxjs'
+import { takeUntil } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-season-first',
@@ -14,6 +18,7 @@ import { MatTableDataSource } from '@angular/material';
 })
 
 export class Season implements OnInit {
+  private onDestroy$ = new Subject<void>();
   seasionDetails = new MatTableDataSource();
   displayedColumns:string[] = [
     'seasonName','winerClubName','runnerUpClubName', 'topScorer','topMidFielder','topDefender','topGoalKepper'
@@ -37,10 +42,14 @@ export class Season implements OnInit {
     private springService: SpringService,
     private formBilder: FormBuilder,
     private messageService: MessageService,
-    private handleError: HttperrorresponseService
+    private handleError: HttperrorresponseService,
+    private seasonService: SeasonService
     ) {
-    this.getSeasionList();
-    this.seasonForm = this.formBilder.group(this.mySeasonForm);
+      this.seasonForm = this.formBilder.group(this.mySeasonForm); 
+      this.getSeasionList();
+      this.seasonService.seasonStateChange$.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+      this.getSeasionList();
+   });
   }
 
   public getSeasionList() {
@@ -112,7 +121,8 @@ export class Season implements OnInit {
       this.seasonForm.controls['midfielder'].setErrors(null);
       this.seasonForm.controls['winerClub'].setErrors(null);
       this.seasonForm.controls['forward'].setErrors(null);
-      this.messageService.showMessage("Season Data Save sucefully"); 
+      this.seasonService.seasonStateChange.next();
+      this.messageService.showMessage("Season Data Save sucefully");
     }, error=> this.messageService.showMessage(error.statusCode));
    }
  }
