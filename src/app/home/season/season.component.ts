@@ -11,19 +11,19 @@ import { PlayerService } from '../../share/player.service';
 import { Subject } from 'rxjs'
 import { takeUntil } from 'rxjs/operators';
 
-
 @Component({
   selector: 'app-season-first',
   templateUrl: './season.component.html',
   styleUrls: ['./season.component.css']
 })
 
-export class Season implements OnInit {
+export class Season {
   private onDestroy$ = new Subject<void>();
   seasionDetails = new MatTableDataSource();
   displayedColumns:string[] = [
     'seasonName','winerClubName','runnerUpClubName', 'topScorer','topMidFielder','topDefender','topGoalKepper'
   ];
+  position: string[] = ['Forward','Midfielder','Defender','GoalKeeper'];
   clublist: clubDetails[] = [];
   forwardPlayerlist: playerDetails[] = [];
   midfilderPlayerlist: playerDetails[] = [];
@@ -52,6 +52,8 @@ export class Season implements OnInit {
       this.seasonService.seasonStateChange$.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
       this.getSeasionList();
    });
+    this.assignedClubName();
+    this.initializedPlayer();
   }
 
   public getSeasionList() {
@@ -60,33 +62,25 @@ export class Season implements OnInit {
     });
   }
 
-  ngOnInit() {
-    this.assignedClubName();
-    
-    this.playerSerive.getPlayer('Forward').subscribe((data: any) => {
-      data.forEach(element => {
-        this.forwardPlayerlist.push(Object.assign({playerName: element.playerName, id:element.id}));
-      });
+  initializedPlayer() {
+    this.position.forEach((value,i)=>{
+      this.playerSerive.getPlayer(this.position[i].toString()).subscribe((data: any) => {
+        switch(i) {
+          case 0:
+          this.forwardPlayerlist.push(Object.assign({playerName:data.playerName, id:data.id}));
+          break;
+          case 1:
+          this.midfilderPlayerlist.push(Object.assign({playerName: data.playerName, id:data.id}));
+          break;
+          case 2:
+          this.defenderPlayerlist.push(Object.assign({playerName: data.playerName, id:data.id}));
+          break;
+          case 3:
+          this.goalkeeperslist.push(Object.assign({playerName: data.playerName, id:data.id}));
+          break;
+        }
+     });
     });
-
-    this.playerSerive.getPlayer('Midfielder').subscribe((data: any) => {
-      data.forEach(element => {
-        this.midfilderPlayerlist.push(Object.assign({playerName: element.playerName, id:element.id}));
-      });
-    });
-
-    this.playerSerive.getPlayer('Defender').subscribe((data: any) => {
-      data.forEach(element => {
-        this.defenderPlayerlist.push(Object.assign({playerName: element.playerName, id:element.id}));
-      });
-    });
-
-    this.playerSerive.getPlayer('GoalKeeper').subscribe((data: any)=>{
-      data.forEach(element => {
-        this.goalkeeperslist.push(Object.assign({playerName: element.playerName, id:element.id}));
-      });
-    });
-
   }
 
   assignedClubName() {

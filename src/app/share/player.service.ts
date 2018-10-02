@@ -1,22 +1,26 @@
 import { Injectable } from '@angular/core';
 import { SpringService } from '../share/springService/spring.service'
 import 'rxjs/add/operator/map';
+import { catchError, switchMap } from 'rxjs/operators';
+import { HttperrorresponseService } from '../share/httpErrorHandlingService/httperrorresponse.service';
 @Injectable({
     providedIn: 'root'
   })
-
+  
   export class PlayerService {
-    playerList: playerDetails[] = [];
-      constructor(private springService:SpringService) {
+      constructor(
+        private springService:SpringService,
+        private handleError:HttperrorresponseService
+        ) {
     }
 
-    getPlayer(position) {
-       return this.springService.get('/getplayer/'+position);
-    }
-
+    getPlayer(position: any) {
+       return this.springService.get('/getplayer/'+position).pipe(
+          catchError(this.handleError.errorHandling),
+          switchMap((res:any)=>{
+            return res;
+          })
+       );
+    }  
   }
   
-  export interface playerDetails {
-    playerName: any;
-    id: any;
-  }
