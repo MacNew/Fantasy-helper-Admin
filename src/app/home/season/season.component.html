@@ -1,0 +1,125 @@
+<div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap 
+fxLayoutGap="2%" fxLayoutAlign="center">
+ <div fxFlex="50%" class="margin">
+   <p> Season Information </p>
+   <perfect-scrollbar id="scrollbar" [config]="config" class="w-100">
+      <mat-card>
+        <form (ngSubmit)="onSubmit()" [formGroup]="seasonForm">
+          <mat-form-field class="style-width">
+            <input matInput placeholder="Season Name"
+            formControlName = "seasonName"
+            />
+            <mat-error>
+              Seasion Name is required
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="style-width">
+            <mat-select placeholder="Winer Clubs" formControlName="winerClub">
+              <mat-option *ngFor= "let club of clublist" [value]="club.id">
+                {{club.clubName}}
+              </mat-option>
+            </mat-select>
+            <mat-error>
+              Winner Club and Runner up should not be same
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="style-width">
+            <mat-select placeholder="Runner up Clubs" formControlName="runnerUpClub">
+              <mat-option *ngFor= "let club of clublist" [value]="club.id">
+                {{club.clubName}}
+              </mat-option>
+            </mat-select>
+            <mat-error>
+              Winner Club and Runner up should not be same
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="style-width">
+            <mat-select placeholder=" Top Forwards " formControlName="forward">
+              <mat-option *ngFor= "let player of forwardPlayerlist" [value]="player.id">
+                {{player.playerName}}
+              </mat-option>
+            </mat-select>
+            <mat-error>
+              This field is required
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="style-width">
+            <mat-select placeholder="Top Mid fielders" formControlName="midfielder">
+              <mat-option *ngFor= "let player of midfilderPlayerlist" [value]="player.id">
+                {{player.playerName}}
+              </mat-option>
+            </mat-select>
+            <mat-error>
+              This field is required
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="style-width">
+            <mat-select placeholder="Top Defenders" formControlName="defender">
+              <mat-option *ngFor= "let player of defenderPlayerlist" [value]="player.id">
+                {{player.playerName}}
+              </mat-option>
+            </mat-select>
+            <mat-error>
+              This field is required
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="style-width">
+            <mat-select placeholder="Top Goal Keepers" formControlName="goalkeeper">
+              <mat-option *ngFor= "let player of goalkeeperslist" [value]="player.id">
+                {{player.playerName}}
+              </mat-option>
+            </mat-select>
+            <mat-error>
+              This field is required
+            </mat-error>
+          </mat-form-field>
+          <button mat-button class="w-100 mt-15"
+          [disabled]="seasonForm.invalid || seasonForm.prestine"
+          >Insert Season Information</button>
+      </form>
+    </mat-card>
+   </perfect-scrollbar>
+  </div>
+ <div fxFlex="50%" class="margin">
+    <p id="title">Season list</p>
+      <mat-form-field class="w-100">
+        <input matInput (keyup)="applyFilter($event.target.value)" 
+        class="w-100"
+        placeholder="Filter by Season Name">
+      </mat-form-field>
+      <div class="scrollmenu">
+        <table mat-table [dataSource]="seasionDetails">      
+          <ng-container matColumnDef="seasonName">
+            <th mat-header-cell *matHeaderCellDef>Season Name</th>
+            <td mat-cell *matCellDef="let element">{{element.seasonName}}</td>
+          </ng-container>
+          <ng-container matColumnDef="winerClubName">
+              <th mat-header-cell *matHeaderCellDef>Winter Club</th>
+              <td mat-cell *matCellDef="let element">{{element.winerClubName}}</td>
+          </ng-container>
+          <ng-container matColumnDef="runnerUpClubName">
+              <th mat-header-cell *matHeaderCellDef>Runner up Club</th>
+              <td mat-cell *matCellDef="let element">{{element.runnerUpClubName}}</td>
+          </ng-container>
+          <ng-container matColumnDef="topScorer">
+              <th mat-header-cell *matHeaderCellDef>Top Scorer</th>
+              <td mat-cell *matCellDef="let element">{{element.topScorer}}</td>
+          </ng-container>
+          <ng-container matColumnDef="topMidFielder">
+              <th mat-header-cell *matHeaderCellDef>Top MidFilder</th>
+              <td mat-cell *matCellDef="let element">{{element.topMidFielder}}</td>
+          </ng-container>
+          <ng-container matColumnDef="topDefender">
+              <th mat-header-cell *matHeaderCellDef>Top Defender</th>
+              <td mat-cell *matCellDef="let element">{{element.topDefender}}</td>
+          </ng-container>
+          <ng-container matColumnDef="topGoalKepper">
+              <th mat-header-cell *matHeaderCellDef>Top topGoal keeper</th>
+              <td mat-cell *matCellDef="let element">{{element.topGoalKepper}}</td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef= "displayedColumns"></tr>
+          <tr mat-row *matRowDef= "let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+</div>
+</div>

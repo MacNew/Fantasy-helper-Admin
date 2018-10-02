@@ -1,14 +1,14 @@
 <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap 
 fxLayoutGap="2%" fxLayoutAlign="center">
   <div fxFlex="50%">
-    <p style="margin:5%; margin-left: 35%">Insert Clubs Details<p>
+    <p id="title">Insert Clubs Details<p>
     <mat-card>
       <form (ngSubmit)="onSubmit()" [formGroup]="clubForm">
-        <mat-form-field style="width: 100%">
+        <mat-form-field class="w-100">
            <input matInput placeholder="Club Name" formControlName = "clubName" [(ngModel)] = "clubLogoName"/>
            <mat-error>Club name is required</mat-error>
           </mat-form-field>
-          <mat-form-field style="width: 100%">
+          <mat-form-field class="w-100">
             <mat-select placeholder = "Is Current Playing" 
             formControlName= "isCurrentPlaying">
               <mat-option value="true">
@@ -25,16 +25,16 @@ fxLayoutGap="2%" fxLayoutAlign="center">
             <input mat-file type= "file"
               (change) ="onFileSelected($event)" 
               formControlName = "file">
-              <div *ngIf="!clubForm.controls['file'].valid && clubForm.controls['file'].touched"
-              style="font-size:12px; color: red">
+              <div class="error" *ngIf="!clubForm.controls['file'].valid && clubForm.controls['file'].touched"
+              >
                   File Format must be jpg or png
               </div> 
-        <button mat-button style="width: 100%; margin-top: 15px"
+        <button class="w-100 mt-15" mat-button 
           [disabled]="clubForm.invalid || clubForm.prestine"
           >Save Inserted Club</button> 
         </form>
     </mat-card>
-    <mat-card style="margin-top: 15px">
+    <mat-card class="mt-15">
       <mat-card-header>
         <mat-card-title>{{clubLogoName}}</mat-card-title>
       </mat-card-header>
@@ -43,18 +43,18 @@ fxLayoutGap="2%" fxLayoutAlign="center">
       /> 
     </mat-card>
   </div>
-  <div fxFlex="65%" style="align-items: center">
-    <p style="margin:5%; margin-left: 35%">Club list</p>
-    <perfect-scrollbar style="max-width:600px; max-height:500px;" [config]="config"
-    class="fullWidth"
+  <div fxFlex="65%" class="item-center">
+    <p id="title">Club list</p>
+    <perfect-scrollbar id="scrollbar" [config]="config"
+    class="w-100"
     >
-      <mat-form-field style="width: 100%">
+      <mat-form-field class="w-100">
         <input matInput (keyup)="applyFilter($event.target.value)" 
-        class="fullWidth"
+        class="w-100"
         placeholder="Filter by club Name">
       </mat-form-field>
-    <table mat-table [dataSource] = "clubdetails" class="mat-elevation-z8"
-    style="width: 100%;"
+    <table mat-table [dataSource] = "clubdetails" class="mat-elevation-z8 w-100"
+    
     >
       <ng-container matColumnDef = "fileName">
         <th mat-header-cell *matHeaderCellDef>Logo</th>

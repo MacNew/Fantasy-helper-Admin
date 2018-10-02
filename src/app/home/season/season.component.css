@@ -1,0 +1,45 @@
+.margin{
+  margin: 8px;
+}
+.style-width {
+    width: 100%;
+}
+
+#scrollbar {
+	max-width:600px; 
+	max-height:500px;
+}
+
+#scrollbarSecond {
+  max-width:600px; 
+	max-height:500px;
+}
+
+.mat-column-topScorer, .mat-column-topMidFielder, .mat-column-topDefender, .mat-column-topGoalKepper {
+  max-width: 225px;
+  min-width: 100px;
+  min-height: 56px;
+}
+
+.mat-column-seasonName {
+  max-width: 100px;
+  min-width: 100px;
+  min-height: 56px;
+}
+
+.mat-column-winerClubName, .mat-column-runnerUpClubName {
+  max-width: 225px;
+  min-width: 150px;
+  min-height: 56px;
+}
+
+div.scrollmenu {
+  overflow: auto;
+  white-space: nowrap;
+}
+
+div.scrollmenu ng-container {
+  display: inline-block;
+
+}
+

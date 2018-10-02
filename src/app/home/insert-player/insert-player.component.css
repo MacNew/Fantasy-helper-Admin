@@ -6,4 +6,21 @@ img {
     margin-right: auto;
     border-radius: 50%;
 }
-
+.m-5{
+    margin: 5%;
+}
+#insert-player{
+    max-width:600px; 
+    max-height:400px;
+}
+#player-list-title{
+    margin-left: 35%; 
+    margin-top:55px
+}
+#player-scrollbar{
+    max-width:600px; 
+    max-height:400px;
+}
+#insert-player-button{
+    margin-top:15px
+}

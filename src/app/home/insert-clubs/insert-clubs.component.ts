@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators,FormBuilder, AbstractControl } from '@angular/forms';
-import { MessageService } from '../../share/message.service'
-import { SpringService } from '../../share/springService/spring.service'
-import { HttperrorresponseService } from '../../share/httpErrorHandlingService/httperrorresponse.service'
+import { MessageService } from '../../share/message.service';
+import { SpringService } from '../../share/springService/spring.service';
+import { HttperrorresponseService } from '../../share/httpErrorHandlingService/httperrorresponse.service';
 import { catchError } from 'rxjs/operators';
 import { CustomValidators } from '../../validators/custom-validators';
 import { MatTableDataSource, MatDialog } from '@angular/material';
@@ -71,7 +71,6 @@ export class InsertClubsComponent implements OnInit{
   }
 
   onSubmit() {
-    var clubId = this.route.snapshot.url[(this.route.snapshot.url.length-1)].path;
     if (this.clubForm.valid) { 
       var formDate: FormData = new FormData();
       var clubId = this.route.snapshot.url[(this.route.snapshot.url.length-1)].path;

@@ -8,6 +8,8 @@ import { InsertPlayerComponent } from './insert-player/insert-player.component';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import { Season } from './season/season.component';
+
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
   };
@@ -15,7 +17,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
 @NgModule({
     declarations: [ 
-        homeComponents, InsertPlayerComponent
+        homeComponents, InsertPlayerComponent, Season
     ],
     imports: [
         HomeRoutingModule,

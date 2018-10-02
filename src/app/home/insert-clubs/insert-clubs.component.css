@@ -1,13 +1,21 @@
 img {
     max-width: 50%; height: auto; 
     display: block;
-     margin-left: auto; 
-     margin-right: auto;
-     border-radius: 50%;
+	margin-left: auto; 
+	margin-right: auto;
+	border-radius: 50%;
 }
 
-fullWidth {
-    width: 100%;
-    
+#scrollbar{
+	max-width:600px; 
+	max-height:500px;
+}
+
+.title{
+	margin:5%; 
+	margin-left: 35%
+}
+.w-100{
+	width: 100%;
 }
 
