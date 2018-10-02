@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './share/authService/authentication.service';
 import { SpringService } from './share/springService/spring.service';
 import { SeasonService } from './share/seasonService';
+import { PlayerService } from './share/player.service';
 import { HttperrorresponseService } from './share/httpErrorHandlingService/httperrorresponse.service'
 import { MessageService } from './share/message.service';
 import { AuthGuard } from './auth.guard';
@@ -42,7 +43,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   providers: [ {
     provide: PERFECT_SCROLLBAR_CONFIG,
     useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
-  },AuthService, SpringService, HttperrorresponseService, AuthGuard,MessageService, SeasonService ],
+  },AuthService, SpringService, HttperrorresponseService, AuthGuard, MessageService, SeasonService, PlayerService ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }
