@@ -19,6 +19,8 @@ import { FantasyHelperNavComponent } from './fantasy-helper-nav/fantasy-helper-n
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import { DialogsPromptComponent } from './share/dialogs/dialogs-prompt.component';
+
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };
@@ -27,7 +29,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   declarations: [
    AppComponent,
    routingComponent,
-   FantasyHelperNavComponent
+   FantasyHelperNavComponent,
+   DialogsPromptComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +46,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   providers: [ {
     provide: PERFECT_SCROLLBAR_CONFIG,
     useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
-  },AuthService, SpringService, HttperrorresponseService, AuthGuard, MessageService, SeasonService, PlayerService ],
-  bootstrap: [ AppComponent ]
+  },AuthService, SpringService, HttperrorresponseService, AuthGuard,MessageService ],
+  bootstrap: [ AppComponent ],
+  entryComponents: [DialogsPromptComponent]
 })
 export class AppModule { }

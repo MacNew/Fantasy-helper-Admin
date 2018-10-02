@@ -5,10 +5,11 @@ import { SpringService } from '../../share/springService/spring.service';
 import { HttperrorresponseService } from '../../share/httpErrorHandlingService/httperrorresponse.service';
 import { catchError } from 'rxjs/operators';
 import { CustomValidators } from '../../validators/custom-validators';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatDialog } from '@angular/material';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
+import { DialogsPromptComponent } from '../../share/dialogs/dialogs-prompt.component';
 
 @Component({
   selector: 'app-insert-clubs',
@@ -21,6 +22,7 @@ export class InsertClubsComponent implements OnInit{
   displayedColumns:string[] = [
     'fileName','clubName','isCurrentSeasonPlaying', 'action'
   ];
+  deleteDialog: any;
   clubLogoName: string = "";
   imageSrc: string;
   clubsDetails : any[];
@@ -42,7 +44,8 @@ export class InsertClubsComponent implements OnInit{
     private springService: SpringService,
     private handleError: HttperrorresponseService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private dialog: MatDialog
     
   ) { 
     this.clubForm = this.formBilder.group(this.myClubForm);
@@ -117,5 +120,28 @@ export class InsertClubsComponent implements OnInit{
 
   updateClub(club) {
     this.router.navigate([ '/home/insertclubs/edit/' + club.id ]);
+  }
+
+  deleteClick(clubDetails) {
+    this.deleteDialog = this.dialog.open(DialogsPromptComponent, {
+      data: {
+        okClick: this.deleteClub(clubDetails),
+        changeType: 'delete',
+        type: 'club',
+        displayName: clubDetails.clubName
+      }
+    });
+  }
+
+  deleteClub(clubDetails) {
+    return () => {
+      this.springService.delete("/delete/club/" + clubDetails.id).pipe(
+        catchError(this.handleError.errorHandling)
+      ).subscribe((data) => {
+          this.getClubList();
+          this.deleteDialog.close();
+          this.messageService.showMessage('You have deleted Meetup ' + clubDetails.clubName);
+        }, error => this.deleteDialog.componentInstance.message = 'There was a problem deleting this club');
+    };
   }
 }
