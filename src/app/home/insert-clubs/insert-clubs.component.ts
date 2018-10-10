@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators,FormBuilder, AbstractControl } from '@angular/forms';
 import { MessageService } from '../../share/message.service';
 import { SpringService } from '../../share/springService/spring.service';
+import { ClubService } from '../../share/club.service';
 import { HttperrorresponseService } from '../../share/httpErrorHandlingService/httperrorresponse.service';
 import { catchError } from 'rxjs/operators';
 import { CustomValidators } from '../../validators/custom-validators';
@@ -45,11 +46,12 @@ export class InsertClubsComponent implements OnInit{
     private handleError: HttperrorresponseService,
     private router: Router,
     private route: ActivatedRoute,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private clubService: ClubService
     
   ) { 
     this.clubForm = this.formBilder.group(this.myClubForm);
-    this.springService.clublistStateChange$.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+    this.clubService.clublistStateChange$.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
        this.getClubList();    
     });
 
@@ -90,7 +92,7 @@ export class InsertClubsComponent implements OnInit{
          this.messageService.showMessage('Club inserted '+ this.clubForm.value.clubName);
          this.clubForm.reset();
          this.imageSrc = 'http://placehold.it/180';
-         this.springService.clubListStateChange.next();
+         this.clubService.clubListStateChange.next();
        }, error => {
         this.messageService.showMessage(error.message.error.erroMessage);
        });       

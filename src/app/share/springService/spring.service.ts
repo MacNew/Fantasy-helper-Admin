@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'; 
-import { Subject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -13,10 +13,6 @@ const httpOptions = {
 })
 
 export class SpringService {
-  public clubListStateChange = new Subject<void>()
-  public playerListStateChange = new Subject<void>()
-  clublistStateChange$ = this.clubListStateChange.asObservable();
-  playerListStateChange$ = this.playerListStateChange.asObservable();
   baseUrl:string = 'fantasyhelper/api';
   constructor(private http: HttpClient) { 
   }
