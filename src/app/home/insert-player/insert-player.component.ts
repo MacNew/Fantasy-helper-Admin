@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators,FormBuilder, AbstractControl } from '@angular/forms';
-import { MessageService } from '../../share/message.service'
-import { SpringService } from '../../share/springService/spring.service'
+import { FormGroup, Validators,FormBuilder } from '@angular/forms';
+import { MessageService } from '../../share/message.service';
+import { SpringService } from '../../share/springService/spring.service';
+import { PlayerService } from '../../share/player.service';
 import { HttperrorresponseService } from '../../share/httpErrorHandlingService/httperrorresponse.service'
 import { catchError, switchMap } from 'rxjs/operators';
 import { CustomValidators } from '../../validators/custom-validators';
 import { MatTableDataSource } from '@angular/material';
 import { takeUntil } from 'rxjs/operators';
 import { DomSanitizer } from '@angular/platform-browser';
-import { forkJoin,Subject } from 'rxjs'
+import { forkJoin,Subject } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http'; 
 
 export interface Position {
@@ -53,14 +54,15 @@ export class InsertPlayerComponent implements OnInit {
     private messageService: MessageService,
     private springService: SpringService,
     private handleError: HttperrorresponseService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private playerService: PlayerService
     ) {
      this.playerForm = this.formBuilder.group(this.player);
      }
 
   ngOnInit() {
     this.assignedClubName();
-    this.springService.playerListStateChange$.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+    this.playerService.playerListStateChange$.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
       this.playerStageChange();
           
    });       
@@ -115,7 +117,7 @@ export class InsertPlayerComponent implements OnInit {
    this.springService.post('/insert/player',formData).pipe(
      catchError(this.handleError.errorHandling)
    ).subscribe(data => {
-    this.springService.playerListStateChange.next();
+    this.playerService.playerListStateChange.next();
      this.messageService.showMessage("player inserted Sucessfully");
    },error=>{
       this.messageService.showMessage("data can't inserted");   
