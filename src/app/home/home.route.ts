@@ -7,6 +7,7 @@ import { DisplayClubsInsertedComponent } from './display-clubs-inserted/display-
 import { AuthGuard } from '../auth.guard';
 import { InsertPlayerComponent } from './insert-player/insert-player.component'
 import {  Season } from './season/season.component';
+import {GoalUpdateComponent} from './goalupdate/goal-update.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,11 @@ const routes: Routes = [
           component: Season,
           canActivate: [AuthGuard]
         },
+        {
+          path: 'goalupdate',
+          component: GoalUpdateComponent,
+          canActivate: [AuthGuard]
+        }
       ]
       },
       { path:'**', component: PageNotFoundComponent }
