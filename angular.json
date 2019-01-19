@@ -21,7 +21,7 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "../../fantasyhelper/uploads",
+                "input": "../fantasyhelper/uploads",
                 "output": "./assets/outside-assets" 
               }
             ],
