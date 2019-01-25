@@ -1,0 +1,36 @@
+<div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap
+     fxLayoutGap="2%" fxLayoutAlign="center">
+  <div fxFlex="50%">
+    <p>Update Goal Information</p>
+    <mat-card>
+      <form>
+        <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap
+             fxLayoutGap="2%" fxLayoutAlign="center">
+          <div fxFlex="50%">
+            <mat-form-field >
+              <mat-select placeholder="Select Club Name" (selectionChange) = "clubNameChanged($event.value)">
+                <mat-option *ngFor= "let club of clublist" [value]="club.id">{{club.clubName}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div fxFlex="50%">
+            <mat-form-field>
+              <mat-select placeholder="Player Postion" (selectionChange)="playerPostionChanged($event.value)">
+                <mat-option *ngFor="let position of playerPositions" [value]="position.value">{{position.viewValue}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+          <mat-form-field>
+            <mat-select placeholder="Select Player Name" >
+            <mat-option *ngFor="let player of playerDetails" [value]="player.id">{{player.playerName}}</mat-option>
+            </mat-select>
+           </mat-form-field>
+        </form>
+    </mat-card>
+  </div>
+  <div fxFlex="50%" fxLayout="center">
+    Needs to display player information
+  </div>
+</div>
+
