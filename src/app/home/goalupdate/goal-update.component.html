@@ -21,11 +21,25 @@
             </mat-form-field>
           </div>
         </div>
-          <mat-form-field>
-            <mat-select placeholder="Select Player Name" >
-            <mat-option *ngFor="let player of playerDetails" [value]="player.id">{{player.playerName}}</mat-option>
-            </mat-select>
-           </mat-form-field>
+
+        <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap
+             fxLayoutGap="2%" fxLayoutAlign="center">
+          <div fxFlex="50%">
+            <mat-form-field>
+              <mat-select placeholder="Select Player Name" >
+                <mat-option *ngFor="let player of playerDetails" [value]="player.id">{{player.playerName}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+          </div>
+          <div fxFlex="50%">
+            <mat-form-field>
+              <mat-select placeholder="Select Season">
+                <mat-option *ngFor="let season of seasonDetails" [value]="season.id">{{season.seasonName}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
         </form>
     </mat-card>
   </div>

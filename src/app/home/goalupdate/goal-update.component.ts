@@ -3,19 +3,21 @@ import {SpringService} from '../../share/springService/spring.service';
 import {clubDetails, Position} from '../insert-player/insert-player.component';
 import {PlayerService} from '../../share/player.service';
 import {playerDetails} from '../season/season.component';
+import {pipe} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-goal-update',
   templateUrl: './goal-update.component.html',
   styleUrls: ['./goal-update.component.css']
 })
-
-
 export class GoalUpdateComponent  implements OnInit {
   clubid: string;
   playerPostion: string;
   clublist: clubDetails[] = [];
   playerDetails: playerDetails[] = [];
+  seasonDetails: Season[] = [];
+
   constructor(private springService: SpringService, private playerService: PlayerService) {}
   playerPositions: Position[] = [
     {value: 'Forward', viewValue: 'Forward'},
@@ -25,6 +27,7 @@ export class GoalUpdateComponent  implements OnInit {
   ];
   ngOnInit(): void {
      this.getCurrrentSeasionClubName();
+     this.getSeasonInformation();
   }
 
   private getCurrrentSeasionClubName() {
@@ -46,14 +49,27 @@ export class GoalUpdateComponent  implements OnInit {
   }
 
   private getplayerList(clubId: string, playerPostion: string) {
+    this.playerDetails.splice(0, this.playerDetails.length);
     this.playerService.getPlayerFromClubAndPosition(playerPostion, clubId).subscribe(res => {
      this.updateList(res);
     });
   }
 
   private updateList(res: any) {
-    console.log("hai"+res);
-    this.playerDetails.splice(0, this.playerDetails.length);
     this.playerDetails.push(Object.assign({playerName: res['playerName'], id: res['id']}));
   }
+
+  private getSeasonInformation() {
+    this.springService.get('/season/getAll').pipe(map(res => {
+      return res.forEach(data => {
+        this.seasonDetails.push(Object.assign({id: data.id, seasonName: data.seasonName}));
+      });
+  })).subscribe();
+  }
 }
+
+export interface Season {
+  id: any;
+  seasonName: any;
+}
+
