@@ -17,11 +17,13 @@ export class GoalUpdateComponent  implements OnInit {
   clubid: string;
   playerPostion: string;
   clublist: clubDetails[] = [];
+  clublistplayed: clubDetails[] = [];
   playerDetails: playerDetails[] = [];
   seasonDetails: Season[] = [];
   goalScore: Goal[] = [];
   playerImage: any;
   clubImage: any;
+
   private goalForm: FormGroup;
   public hiddenPlayerInformation = false;
   constructor(private springService: SpringService,
@@ -30,16 +32,9 @@ export class GoalUpdateComponent  implements OnInit {
               private formBuilder: FormBuilder
 
   ) {
-    this.goalForm = this.formBuilder.group({
-      clubName: ['', Validators.required],
-      playerPostion: ['', Validators.required],
-      playerName: ['', Validators.required],
-      seasonName: ['', Validators.required],
-      clubNameplayerPlayed: ['', Validators.required],
-      homegoalscore: ['', Validators.required],
-      awaygoalscore: ['', Validators.required],
-      homegoalconsider: ['', Validators.required],
-      awaygoalconsider: ['', Validators.required]});
+    for (let i = 0; i < 5; i++) {
+      this.goalScore.push(Object.assign({value: i}));
+    }
   }
 
   playerPositions: Position[] = [
@@ -49,11 +44,19 @@ export class GoalUpdateComponent  implements OnInit {
     {value: 'GoalKeeper', viewValue: 'GoalKeeper'}
   ];
   ngOnInit(): void {
-    for (let i = 0; i < 5; i++) {
-      this.goalScore.push(Object.assign({value: i}));
-    }
-     this.getCurrrentSeasionClubName();
-     this.getSeasonInformation();
+    this.goalForm = this.formBuilder.group({
+      clubName: [null, Validators.required],
+      playerPostion: [null, Validators.required],
+      playerName: [null, Validators.required],
+      seasonName: [null, Validators.required],
+      clubNameplayerPlayed: [null, Validators.required],
+      homegoalscore: [null, Validators.required],
+      awaygoalscore: [null, Validators.required],
+      homegoalconsider: [null, Validators.required],
+      awaygoalconsider: [null, Validators.required]});
+      this.getCurrrentSeasionClubName();
+      this.getSeasonInformation();
+      this.getCurrentSeasionClubNamePlayed();
   }
 
   private getCurrrentSeasionClubName() {
@@ -64,11 +67,18 @@ export class GoalUpdateComponent  implements OnInit {
     });
   }
 
+  private getCurrentSeasionClubNamePlayed() {
+    this.springService.get('/currentseason/get/clubs').subscribe(( data: any ) => {
+      data.forEach(element => {
+        this.clublistplayed.push(Object.assign({clubName: element.clubName, id: element.id, fileName: element.fileName}));
+      });
+    });
+  }
+
   private clubNameChanged(event) {
     this.hiddenPlayerInformation = false;
     this.playerImage = null;
     this.clubid = event;
-    this.playerDetails.splice(0, this.playerDetails.length);
     this.getplayerList(this.clubid, this.playerPostion);
     this.returnBobImage(event, this.clublist).subscribe((res => {
       const urlCreator = window.URL;
@@ -113,6 +123,11 @@ export class GoalUpdateComponent  implements OnInit {
   }
   playerChanged(playerId: any) {
     this.hiddenPlayerInformation = true;
+    this.updateGoals('homegoalscore', false);
+    this.updateGoals('awaygoalscore', false);
+    this.updateGoals('homegoalconsider', false);
+    this.updateGoals('awaygoalconsider', false);
+    this.updateGoals('clubNameplayerPlayed', false);
     this.returnBobImage(playerId, this.playerDetails).subscribe((res: any) => {
       const urlCreator = window.URL;
       this.playerImage = this.sanitizer.bypassSecurityTrustUrl(
@@ -141,7 +156,7 @@ export class GoalUpdateComponent  implements OnInit {
       goalInformation.awayGoalConsider = this.goalForm.value.awaygoalconsider;
       goalInformation.clubId = this.goalForm.value.clubName;
       this.springService.post('/insert/goal', goalInformation).subscribe(data => {
-         console.log(data);
+        console.log(data);
       });
     } else {
       console.log('it is not valid');
@@ -151,8 +166,25 @@ export class GoalUpdateComponent  implements OnInit {
   clubPlayedChanged(value: any) {
     const playerId = this.goalForm.value.playerName;
     const seasonId = this.goalForm.value.seasonName;
-    this.springService.get('/getGoalInformation/' + value + '/' + seasonId + '/' + playerId);
-
+    this.springService.get('/getGoalInformation/' + value + '/' + seasonId + '/' + playerId)
+      .subscribe(data => {
+        if (data != null) {
+          this.updateGoals('homegoalscore', 'homeGoalScore', data);
+          this.updateGoals('awaygoalscore', 'awatyGoalScore', data);
+          this.updateGoals('homegoalconsider', 'homeGoalConsider', data);
+          this.updateGoals('awaygoalconsider', 'awayGoalConsider', data);
+        } else {
+          this.updateGoals('homegoalscore', false);
+          this.updateGoals('awaygoalscore', false);
+          this.updateGoals('homegoalconsider', false);
+          this.updateGoals('awaygoalconsider', false);
+        }
+      });
+  }
+  private updateGoals(formName: string, returnObjectName?: any, data?: any) {
+    returnObjectName ? this.goalForm.get(formName).setValue(this.goalScore.find(res => {
+      return res.value === data[returnObjectName];
+    }).value) : this.goalForm.get(formName).setValue('');
   }
 }
 

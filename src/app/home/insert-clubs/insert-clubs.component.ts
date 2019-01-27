@@ -47,7 +47,6 @@ export class InsertClubsComponent implements OnInit{
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private clubService: ClubService
-    
   ) { 
     this.clubForm = this.formBilder.group(this.myClubForm);
     this.clubService.clublistStateChange$.pipe(takeUntil(this.onDestroy$)).subscribe(() => {

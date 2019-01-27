@@ -62,7 +62,7 @@
         <div fxFlex="50%">
           <mat-form-field >
             <mat-select placeholder="Select Club he playe" formControlName="clubNameplayerPlayed" (selectionChange)="clubPlayedChanged($event.value)">
-              <mat-option *ngFor= "let club of clublist" [value]="club.id">{{club.clubName}}</mat-option>
+              <mat-option *ngFor= "let club of clublistplayed" [value]="club.id">{{club.clubName}}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
