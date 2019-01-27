@@ -19,7 +19,7 @@ export class SpringService {
 
   public post(db:string,data:any,opts?:any) : Observable<any> {
      opts != null ? (opts = opts) : (opts = httpOptions)
-     return this.http.post(this.baseUrl+db,data,httpOptions)
+     return this.http.post(this.baseUrl+db,data,httpOptions);
   }
 
   public get(db:string, opts?: any): Observable<any> {

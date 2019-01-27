@@ -131,8 +131,10 @@ export interface clubDetails {
 }
 
 export interface playerDetails {
+  playerIndex: any;
   playerName: any;
   id: any;
+  fileName: any;
 }
 
 export interface SeasonList {
