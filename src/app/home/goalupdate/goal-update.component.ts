@@ -123,6 +123,7 @@ export class GoalUpdateComponent  implements OnInit {
   public onSubmit() {
     if (this.goalForm.valid) {
       const goalInformation: Goal = new class implements Goal {
+        id: any;
         awatyGoalScore: any;
         awayGoalConsider: any;
         clubId: any;
@@ -146,6 +147,13 @@ export class GoalUpdateComponent  implements OnInit {
       console.log('it is not valid');
     }
   }
+
+  clubPlayedChanged(value: any) {
+    const playerId = this.goalForm.value.playerName;
+    const seasonId = this.goalForm.value.seasonName;
+    this.springService.get('/getGoalInformation/' + value + '/' + seasonId + '/' + playerId);
+
+  }
 }
 
 
@@ -155,6 +163,7 @@ export interface Season {
 }
 
 export  interface  Goal {
+  id: any;
   playerId: any;
   seasonId: any;
   homeGoalScore: any;

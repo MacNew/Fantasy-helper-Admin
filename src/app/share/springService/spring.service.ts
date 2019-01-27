@@ -11,7 +11,7 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-
+  
 export class SpringService {
   baseUrl: string = 'fantasyhelper/api';
   constructor(private http: HttpClient) { 

@@ -29,7 +29,7 @@ export class InsertClubsComponent implements OnInit{
   clubsDetails : any[];
   myClubForm = {
   clubName: ['', Validators.required],
-  file: ['',Validators.compose([
+  file: ['', Validators.compose([
     Validators.required, CustomValidators.fileVlidation
     ])
   ],
@@ -51,7 +51,7 @@ export class InsertClubsComponent implements OnInit{
   ) { 
     this.clubForm = this.formBilder.group(this.myClubForm);
     this.clubService.clublistStateChange$.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
-       this.getClubList();    
+       this.getClubList();
     });
 
     route.params.subscribe(val => {
@@ -94,7 +94,7 @@ export class InsertClubsComponent implements OnInit{
          this.clubService.clubListStateChange.next();
        }, error => {
         this.messageService.showMessage(error.message.error.erroMessage);
-       });       
+       });
       }
   }
   
