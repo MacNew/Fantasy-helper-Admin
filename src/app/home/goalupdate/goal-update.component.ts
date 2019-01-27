@@ -148,27 +148,33 @@ export class GoalUpdateComponent  implements OnInit {
         seasonId: any;
         value: any;
       };
+      if (this.goalId != null)
+      goalInformation.id = this.goalId;
       goalInformation.playerId = this.goalForm.value.playerName;
       goalInformation.seasonId = this.goalForm.value.seasonName;
       goalInformation.homeGoalScore = this.goalForm.value.homegoalscore;
       goalInformation.awatyGoalScore = this.goalForm.value.awaygoalscore;
       goalInformation.homeGoalConsider = this.goalForm.value.homegoalconsider;
       goalInformation.awayGoalConsider = this.goalForm.value.awaygoalconsider;
-      goalInformation.clubId = this.goalForm.value.clubName;
+      goalInformation.clubId = this.goalForm.value.clubNameplayerPlayed;
       this.springService.post('/insert/goal', goalInformation).subscribe(data => {
         console.log(data);
+        this.goalForm.reset();
       });
     } else {
       console.log('it is not valid');
     }
   }
+  goalId: any = null;
 
   clubPlayedChanged(value: any) {
     const playerId = this.goalForm.value.playerName;
     const seasonId = this.goalForm.value.seasonName;
     this.springService.get('/getGoalInformation/' + value + '/' + seasonId + '/' + playerId)
       .subscribe(data => {
+        console.log(data);
         if (data != null) {
+          this.goalId = data['id'];
           this.updateGoals('homegoalscore', 'homeGoalScore', data);
           this.updateGoals('awaygoalscore', 'awatyGoalScore', data);
           this.updateGoals('homegoalconsider', 'homeGoalConsider', data);
