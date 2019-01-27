@@ -21,15 +21,15 @@ export class Season {
   private onDestroy$ = new Subject<void>();
   seasionDetails = new MatTableDataSource();
   displayedColumns:string[] = [
-    'seasonName','winerClubName','runnerUpClubName', 'topScorer','topMidFielder','topDefender','topGoalKepper'
+    'seasonName', 'winerClubName', 'runnerUpClubName', 'topScorer', 'topMidFielder', 'topDefender', 'topGoalKepper'
   ];
-  position: string[] = ['Forward','Midfielder','Defender','GoalKeeper'];
+  position: string[] = ['Forward', 'Midfielder', 'Defender', 'GoalKeeper'];
   clublist: clubDetails[] = [];
   forwardPlayerlist: playerDetails[] = [];
   midfilderPlayerlist: playerDetails[] = [];
   defenderPlayerlist: playerDetails[] = [];
   goalkeeperslist: playerDetails[] = [];
-  private seasonForm:FormGroup;
+  private seasonForm: FormGroup;
   mySeasonForm = {
     seasonName: ['', Validators.required],
     winerClub: ['', Validators.required, CustomValidators.matchClubsecond ],
@@ -57,7 +57,7 @@ export class Season {
   }
 
   public getSeasionList() {
-    this.springService.get('/season/getAll').subscribe(data=> {
+    this.springService.get('/season/getAll').subscribe(data => {
     this.seasionDetails.data = data;
     });
   }
@@ -131,6 +131,13 @@ export interface clubDetails {
 }
 
 export interface playerDetails {
+  playerIndex: any;
   playerName: any;
+  id: any;
+  fileName: any;
+}
+
+export interface SeasonList {
+  seasonName: any;
   id: any;
 }

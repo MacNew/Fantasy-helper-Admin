@@ -7,6 +7,4 @@ import { Subject } from 'rxjs';
   export class ClubService {
     public clubListStateChange = new Subject<void>();
     clublistStateChange$ = this.clubListStateChange.asObservable();
-
-    
   }

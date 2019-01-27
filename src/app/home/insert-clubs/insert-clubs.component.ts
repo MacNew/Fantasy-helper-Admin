@@ -29,8 +29,7 @@ export class InsertClubsComponent implements OnInit{
   clubsDetails : any[];
   myClubForm = {
   clubName: ['', Validators.required],
-  file: ['', 
-    Validators.compose([
+  file: ['',Validators.compose([
     Validators.required, CustomValidators.fileVlidation
     ])
   ],

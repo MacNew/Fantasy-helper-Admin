@@ -1,0 +1,111 @@
+<form [formGroup]="goalForm" (ngSubmit)="onSubmit()">
+<div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap
+     fxLayoutGap="2%" fxLayoutAlign="center">
+  <div fxFlex="50%">
+    <mat-card>
+      <mat-card-header>
+        <div mat-card-avatar>
+          <img class="radius-50" id = "playerImage" [src] ="clubImage || 'http://placehold.it/180'"
+               alt="Club picture" height="34pxpx" width="34pxpx"/>
+        </div>
+        <mat-card-title>Filter player Information</mat-card-title>
+      </mat-card-header>
+        <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap
+             fxLayoutGap="2%" fxLayoutAlign="center">
+          <div fxFlex="50%">
+            <mat-form-field >
+              <mat-select placeholder="Select Club Name" (selectionChange) = "clubNameChanged($event.value)" formControlName="clubName">
+                <mat-option *ngFor= "let club of clublist" [value]="club.id">{{club.clubName}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div fxFlex="50%">
+            <mat-form-field>
+              <mat-select placeholder="Player Postion" (selectionChange)="playerPostionChanged($event.value)" formControlName="playerPostion">
+                <mat-option *ngFor="let position of playerPositions" [value]="position.value">{{position.viewValue}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap
+             fxLayoutGap="2%" fxLayoutAlign="center">
+          <div fxFlex="50%">
+            <mat-form-field>
+              <mat-select placeholder="Select Player Name" (selectionChange)="playerChanged($event.value)" formControlName="playerName">
+                <mat-option *ngFor="let player of playerDetails" [value]="player.id">{{player.playerName}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div fxFlex="50%">
+          </div>
+        </div>
+    </mat-card>
+
+    <mat-card style="margin-top: 8px" *ngIf = "hiddenPlayerInformation">
+      <mat-card-header>
+        <div mat-card-avatar>
+          <img class="radius-50" id = "playerImage" [src] ="playerImage || 'http://placehold.it/180'"
+               alt="Club picture" height="34px" width="34px"/>
+        </div>
+        <mat-card-title>Update Goal Information of Player</mat-card-title>
+      </mat-card-header>
+      <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap
+           fxLayoutGap="2%" fxLayoutAlign="center">
+        <div fxFlex="50%">
+          <mat-form-field>
+            <mat-select placeholder="Select Season" formControlName="seasonName">
+              <mat-option *ngFor="let season of seasonDetails" [value]="season.id">{{season.seasonName}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex="50%">
+          <mat-form-field >
+            <mat-select placeholder="Select Club he playe" formControlName="clubNameplayerPlayed">
+              <mat-option *ngFor= "let club of clublist" [value]="club.id">{{club.clubName}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap
+           fxLayoutGap="2%" fxLayoutAlign="center">
+        <div fxFlex="50%">
+          <mat-form-field>
+            <mat-select placeholder="Home Goal score" formControlName="homegoalscore">
+              <mat-option *ngFor="let goal of goalScore" [value]="goal.value">{{goal.value}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex="50%">
+          <mat-form-field >
+            <mat-select placeholder="Away Goal score" formControlName="awaygoalscore">
+              <mat-option *ngFor="let goal of goalScore" [value]="goal.value">{{goal.value}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap
+           fxLayoutGap="2%" fxLayoutAlign="center">
+        <div fxFlex="50%">
+          <mat-form-field>
+            <mat-select placeholder="Home Goal consider" formControlName="homegoalconsider">
+              <mat-option *ngFor="let goal of goalScore" [value]="goal.value">{{goal.value}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex="50%">
+          <mat-form-field >
+            <mat-select placeholder="Away Goal consider" formControlName="awaygoalconsider">
+              <mat-option *ngFor="let goal of goalScore" [value]="goal.value">{{goal.value}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <button id="submit_goal_update" mat-button class="w-100">Update Goal</button>
+    </mat-card>
+  </div>
+  <div fxFlex="50%" fxLayout="center">
+    Needs to display player information
+  </div>
+</div>
+</form>
