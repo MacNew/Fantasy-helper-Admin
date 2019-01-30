@@ -1,7 +1,7 @@
 <form [formGroup]="goalForm" (ngSubmit)="onSubmit()">
 <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap
      fxLayoutGap="2%" fxLayoutAlign="center">
-  <div fxFlex="50%">
+  <div fxFlex="40%">
     <mat-card>
       <mat-card-header>
         <div mat-card-avatar>
@@ -54,7 +54,7 @@
            fxLayoutGap="2%" fxLayoutAlign="center">
         <div fxFlex="50%">
           <mat-form-field>
-            <mat-select placeholder="Select Season" formControlName="seasonName">
+            <mat-select placeholder="Select Season" formControlName="seasonName" (selectionChange)="playerSeasonChange($event.value)">
               <mat-option *ngFor="let season of seasonDetails" [value]="season.id">{{season.seasonName}}</mat-option>
             </mat-select>
           </mat-form-field>
@@ -104,8 +104,54 @@
       <button id="submit_goal_update" mat-button class="w-100">Update Goal</button>
     </mat-card>
   </div>
-  <div fxFlex="50%" fxLayout="center">
-    Needs to display player information
+  <div fxFlex="60%">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)"
+             placeholder="Filter by club Name"/>
+    </mat-form-field>
+    <table mat-table [dataSource]="goalDetails" class="mat-elevation-z8 w-100">
+      <ng-container matColumnDef="clubFileName">
+        <th mat-header-cell  *matHeaderCellDef>Logo</th>
+        <td mat-cell *matCellDef="let element">
+          <img src= "assets/outside-assets/{{element.clubFileName}}"
+               alt="assets/outside-assets/{{element.clubFileName}}"
+               height="25px" width="25px"/>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="clubName">
+        <th mat-header-cell  *matHeaderCellDef>ClubName</th>
+        <td mat-cell *matCellDef="let element">
+           {{element.clubName}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="homeGoalScore">
+        <th mat-header-cell  *matHeaderCellDef>Home Goal Score</th>
+        <td mat-cell *matCellDef="let element">
+          {{element.homeGoalScore}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="awayGoalScore">
+        <th mat-header-cell  *matHeaderCellDef>Away goal Score</th>
+        <td mat-cell *matCellDef="let element">
+          {{element.awayGoalScore}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="homeGoalConsider">
+        <th mat-header-cell  *matHeaderCellDef>Home Goal Consider</th>
+        <td mat-cell *matCellDef="let element">
+          {{element.homeGoalConsider}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="awayGoalConsider">
+        <th mat-header-cell  *matHeaderCellDef>Away Goal Consider</th>
+        <td mat-cell *matCellDef="let element">
+          {{element.awayGoalConsider}}
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
   </div>
 </div>
 </form>

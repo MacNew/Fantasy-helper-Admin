@@ -7,7 +7,8 @@ import {map} from 'rxjs/operators';
 import {DomSanitizer} from '@angular/platform-browser';
 import {HttpHeaders} from '@angular/common/http';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {MessageService} from '../../share/message.service';
+import { MessageService } from '../../share/message.service';
+import { MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-goal-update',
@@ -24,6 +25,11 @@ export class GoalUpdateComponent  implements OnInit {
   goalScore: Goal[] = [];
   playerImage: any;
   clubImage: any;
+  jsonData: any;
+  goalDetails = new MatTableDataSource();
+  displayedColumns: string [] = [
+    'clubFileName', 'clubName', 'homeGoalScore', 'awayGoalScore', 'homeGoalConsider', 'awayGoalConsider'
+  ];
 
   private goalForm: FormGroup;
   public hiddenPlayerInformation = false;
@@ -87,6 +93,7 @@ export class GoalUpdateComponent  implements OnInit {
       this.clubImage = this.sanitizer.bypassSecurityTrustUrl(
         urlCreator.createObjectURL(res));
     }));
+    this.updateGoalInformation(0);
   }
   private returnBobImage(event: string, list: any): any {
      const fileName = list.filter(res => {
@@ -102,6 +109,7 @@ export class GoalUpdateComponent  implements OnInit {
     this.hiddenPlayerInformation = false;
     this.playerPostion = event;
     this.getplayerList(this.clubid, event);
+    this.updateGoalInformation(0);
   }
 
   private getplayerList(clubId: string, playerPostion: string) {
@@ -130,12 +138,14 @@ export class GoalUpdateComponent  implements OnInit {
     this.updateGoals('homegoalconsider', false);
     this.updateGoals('awaygoalconsider', false);
     this.updateGoals('clubNameplayerPlayed', false);
+    this.updateGoals('seasonName',false);
     this.returnBobImage(playerId, this.playerDetails).subscribe((res: any) => {
       const urlCreator = window.URL;
       this.playerImage = this.sanitizer.bypassSecurityTrustUrl(
         urlCreator.createObjectURL(res)
       );
     });
+    this.updateGoalInformation(0);
   }
   public onSubmit() {
     if (this.goalForm.valid) {
@@ -193,6 +203,27 @@ export class GoalUpdateComponent  implements OnInit {
     returnObjectName ? this.goalForm.get(formName).setValue(this.goalScore.find(res => {
       return res.value === data[returnObjectName];
     }).value) : this.goalForm.get(formName).setValue('');
+  }
+
+  playerSeasonChange(event: any) {
+    this.goalId = null;
+    this.updateGoals('homegoalscore', false);
+    this.updateGoals('awaygoalscore', false);
+    this.updateGoals('homegoalconsider', false);
+    this.updateGoals('awaygoalconsider', false);
+    this.updateGoals('clubNameplayerPlayed', false);
+    this.updateGoalInformation(event);
+  }
+
+   updateGoalInformation(event:any) {
+     this.springService.get('/getGoalInformation/' + event + '/' + this.goalForm.value.playerName).subscribe(data => {
+       this.goalDetails.data = data;
+       this.jsonData = data;
+     });
+   }
+
+  applyFilter(value: any) {
+    this.goalDetails.filter = value.trim().toLowerCase();
   }
 }
 
