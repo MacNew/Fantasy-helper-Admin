@@ -7,6 +7,7 @@ import {map} from 'rxjs/operators';
 import {DomSanitizer} from '@angular/platform-browser';
 import {HttpHeaders} from '@angular/common/http';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MessageService} from '../../share/message.service';
 
 @Component({
   selector: 'app-goal-update',
@@ -29,7 +30,8 @@ export class GoalUpdateComponent  implements OnInit {
   constructor(private springService: SpringService,
               private playerService: PlayerService,
               private sanitizer: DomSanitizer,
-              private formBuilder: FormBuilder
+              private formBuilder: FormBuilder,
+              private messageService: MessageService
 
   ) {
     for (let i = 0; i < 5; i++) {
@@ -158,13 +160,12 @@ export class GoalUpdateComponent  implements OnInit {
       goalInformation.awayGoalConsider = this.goalForm.value.awaygoalconsider;
       goalInformation.clubId = this.goalForm.value.clubNameplayerPlayed;
       this.springService.post('/insert/goal', goalInformation).subscribe(data => {
-        console.log(data);
+        this.messageService.showMessage('Update goal information Sucessfully ');
         this.goalForm.reset();
       });
-    } else {
-      console.log('it is not valid');
     }
   }
+
   goalId: any = null;
 
   clubPlayedChanged(value: any) {
