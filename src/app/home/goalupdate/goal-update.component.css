@@ -1,0 +1,27 @@
+.mat-column-clubFileName {
+  flex: 0 0 75px;
+}
+
+.mat-column-clubName {
+  flex: 0 0 75px;
+}
+
+.mat-column-homeGoalScore {
+  flex: 0 0 75px;
+}
+
+.mat-column-awayGoalScore {
+  flex: 0 0 75px;
+}
+
+.mat-column-homeGoalConsider {
+  flex: 0 0 75px;
+}
+
+.mat-column-awayGoalConsider {
+  flex: 0 0 75px;
+}
+
+.w-100{
+  width: 100%;
+}
