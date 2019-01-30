@@ -187,6 +187,7 @@ export class GoalUpdateComponent  implements OnInit {
           this.updateGoals('awaygoalconsider', false);
         }
       });
+    this.goalId = null;
   }
   private updateGoals(formName: string, returnObjectName?: any, data?: any) {
     returnObjectName ? this.goalForm.get(formName).setValue(this.goalScore.find(res => {
