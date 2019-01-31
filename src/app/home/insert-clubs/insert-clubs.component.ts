@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { MessageService } from '../../share/message.service';
 import { SpringService } from '../../share/springService/spring.service';
@@ -6,7 +6,7 @@ import { ClubService } from '../../share/club.service';
 import { HttperrorresponseService } from '../../share/httpErrorHandlingService/httperrorresponse.service';
 import { catchError } from 'rxjs/operators';
 import { CustomValidators } from '../../validators/custom-validators';
-import { MatTableDataSource, MatDialog } from '@angular/material';
+import {MatTableDataSource, MatDialog, MatPaginator} from '@angular/material';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -19,8 +19,9 @@ import { DialogsPromptComponent } from '../../share/dialogs/dialogs-prompt.compo
 })
 
 export class InsertClubsComponent {
-  clubdetails = new MatTableDataSource();
-  displayedColumns:string[] = [
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  clubdetails: MatTableDataSource<[{}]>;
+  displayedColumns: string[] = [
     'fileName', 'clubName', 'isCurrentSeasonPlaying', 'action'
   ];
   deleteDialog: any;
@@ -86,7 +87,7 @@ export class InsertClubsComponent {
       insertOrEdit.pipe(
         catchError(this.handleError.errorHandling)
        ).subscribe(res => {
-         this.messageService.showMessage('Club inserted '+ this.clubForm.value.clubName);
+         this.messageService.showMessage('Club inserted ' + this.clubForm.value.clubName);
          this.clubForm.reset();
          this.imageSrc = 'http://placehold.it/180';
          this.clubService.clubListStateChange.next();
@@ -107,7 +108,8 @@ export class InsertClubsComponent {
     this.springService.get('/currentseason/get/clubs').pipe(
       catchError(this.handleError.errorHandling)
     ).subscribe(res => {
-      this.clubdetails.data = res;
+      this.clubdetails = new MatTableDataSource(res);
+      this.clubdetails.paginator = this.paginator;
     }, error => {
       this.messageService.showMessage(error.message.error.erroMessage);
     });

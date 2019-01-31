@@ -1,15 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { SpringService } from '../../share/springService/spring.service'
-import { FormGroup, Validators,FormBuilder, AbstractControl } from '@angular/forms';
-import { CustomValidators } from '../../validators/custom-validators';
-import { MessageService } from '../../share/message.service'
-import { catchError } from 'rxjs/operators';
-import { HttperrorresponseService } from '../../share/httpErrorHandlingService/httperrorresponse.service'
-import { MatTableDataSource } from '@angular/material';
-import { SeasonService } from '../../share/seasonService';
-import { PlayerService } from '../../share/player.service';
-import { Subject } from 'rxjs'
-import { takeUntil } from 'rxjs/operators';
+import {Component, ViewChild} from '@angular/core';
+import {SpringService} from '../../share/springService/spring.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {CustomValidators} from '../../validators/custom-validators';
+import {MessageService} from '../../share/message.service';
+import {catchError, takeUntil} from 'rxjs/operators';
+import {HttperrorresponseService} from '../../share/httpErrorHandlingService/httperrorresponse.service';
+import {MatPaginator, MatTableDataSource} from '@angular/material';
+import {SeasonService} from '../../share/seasonService';
+import {PlayerService} from '../../share/player.service';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-season-first',
@@ -18,8 +17,9 @@ import { takeUntil } from 'rxjs/operators';
 })
 
 export class Season {
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   private onDestroy$ = new Subject<void>();
-  seasionDetails = new MatTableDataSource();
+  seasionDetails:MatTableDataSource<[{}]> //= new MatTableDataSource();
   displayedColumns:string[] = [
     'seasonName', 'winerClubName', 'runnerUpClubName', 'topScorer', 'topMidFielder', 'topDefender', 'topGoalKepper'
   ];
@@ -58,25 +58,26 @@ export class Season {
 
   public getSeasionList() {
     this.springService.get('/season/getAll').subscribe(data => {
-    this.seasionDetails.data = data;
+    this.seasionDetails = new MatTableDataSource(data);
+    this.seasionDetails.paginator = this.paginator;
     });
   }
 
   initializedPlayer() {
-    this.position.forEach((value,i)=>{
+    this.position.forEach((value, i) => {
       this.playerSerive.getPlayer(this.position[i].toString()).subscribe((data: any) => {
         switch(i) {
           case 0:
-          this.forwardPlayerlist.push(Object.assign({playerName:data.playerName, id:data.id}));
+          this.forwardPlayerlist.push(Object.assign({playerName: data.playerName, id: data.id}));
           break;
           case 1:
-          this.midfilderPlayerlist.push(Object.assign({playerName: data.playerName, id:data.id}));
+          this.midfilderPlayerlist.push(Object.assign({playerName: data.playerName, id: data.id}));
           break;
           case 2:
-          this.defenderPlayerlist.push(Object.assign({playerName: data.playerName, id:data.id}));
+          this.defenderPlayerlist.push(Object.assign({playerName: data.playerName, id: data.id}));
           break;
           case 3:
-          this.goalkeeperslist.push(Object.assign({playerName: data.playerName, id:data.id}));
+          this.goalkeeperslist.push(Object.assign({playerName: data.playerName, id: data.id}));
           break;
         }
      });
