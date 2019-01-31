@@ -1,24 +1,4 @@
-.mat-column-clubFileName {
-  flex: 0 0 75px;
-}
-
-.mat-column-clubName {
-  flex: 0 0 75px;
-}
-
-.mat-column-homeGoalScore {
-  flex: 0 0 75px;
-}
-
-.mat-column-awayGoalScore {
-  flex: 0 0 75px;
-}
-
-.mat-column-homeGoalConsider {
-  flex: 0 0 75px;
-}
-
-.mat-column-awayGoalConsider {
+.mat-column-clubFileName, .mat-colum-clubName, .mat-column-homeGoalScore, .mat-column-awayGoalScore, .mat-column-awayGoalConsider, .mat-column-homeGoalConsider {
   flex: 0 0 75px;
 }
 

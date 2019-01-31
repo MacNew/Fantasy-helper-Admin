@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {SpringService} from '../../share/springService/spring.service';
 import {clubDetails, Position} from '../insert-player/insert-player.component';
 import {PlayerService} from '../../share/player.service';
@@ -8,14 +8,14 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {HttpHeaders} from '@angular/common/http';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { MessageService } from '../../share/message.service';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatPaginator } from '@angular/material';
 
 @Component({
   selector: 'app-goal-update',
   templateUrl: './goal-update.component.html',
   styleUrls: ['./goal-update.component.css']
 })
-export class GoalUpdateComponent  implements OnInit {
+export class GoalUpdateComponent  implements OnInit, AfterViewInit {
   clubid: string;
   playerPostion: string;
   clublist: clubDetails[] = [];
@@ -25,11 +25,11 @@ export class GoalUpdateComponent  implements OnInit {
   goalScore: Goal[] = [];
   playerImage: any;
   clubImage: any;
-  jsonData: any;
-  goalDetails = new MatTableDataSource();
+  goalDetails: MatTableDataSource<[{}]>; // = new MatTableDataSource();
   displayedColumns: string [] = [
     'clubFileName', 'clubName', 'homeGoalScore', 'awayGoalScore', 'homeGoalConsider', 'awayGoalConsider'
   ];
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   private goalForm: FormGroup;
   public hiddenPlayerInformation = false;
@@ -43,6 +43,11 @@ export class GoalUpdateComponent  implements OnInit {
     for (let i = 0; i < 5; i++) {
       this.goalScore.push(Object.assign({value: i}));
     }
+  }
+
+  ngAfterViewInit() {
+    console.log('ng after View init called');
+
   }
 
   playerPositions: Position[] = [
@@ -215,10 +220,11 @@ export class GoalUpdateComponent  implements OnInit {
     this.updateGoalInformation(event);
   }
 
-   updateGoalInformation(event:any) {
+   updateGoalInformation(event: any) {
      this.springService.get('/getGoalInformation/' + event + '/' + this.goalForm.value.playerName).subscribe(data => {
-       this.goalDetails.data = data;
-       this.jsonData = data;
+       this.goalDetails = new MatTableDataSource(data);
+       this.goalDetails.paginator = this.paginator;
+
      });
    }
 
@@ -231,6 +237,15 @@ export class GoalUpdateComponent  implements OnInit {
 export interface Season {
   id: any;
   seasonName: any;
+}
+
+export interface  GoalInformation {
+  clubFileName: string;
+  clubName: string;
+  homeGoalScore: any;
+  awayGoalScore: any;
+  homeGoalConsider: any;
+  awayGoalConsider: any;
 }
 
 export  interface  Goal {
