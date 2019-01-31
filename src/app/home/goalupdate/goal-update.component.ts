@@ -1,14 +1,15 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {SpringService} from '../../share/springService/spring.service';
 import {clubDetails, Position} from '../insert-player/insert-player.component';
 import {PlayerService} from '../../share/player.service';
 import {playerDetails} from '../season/season.component';
-import {map} from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import {DomSanitizer} from '@angular/platform-browser';
 import {HttpHeaders} from '@angular/common/http';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { MessageService } from '../../share/message.service';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatPaginator } from '@angular/material';
+import {HttperrorresponseService} from '../../share/httpErrorHandlingService/httperrorresponse.service';
 
 @Component({
   selector: 'app-goal-update',
@@ -25,11 +26,12 @@ export class GoalUpdateComponent  implements OnInit {
   goalScore: Goal[] = [];
   playerImage: any;
   clubImage: any;
-  jsonData: any;
-  goalDetails = new MatTableDataSource();
+  goalDetails: MatTableDataSource<[{}]>;
+  goalId: any = null;
   displayedColumns: string [] = [
     'clubFileName', 'clubName', 'homeGoalScore', 'awayGoalScore', 'homeGoalConsider', 'awayGoalConsider'
   ];
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   private goalForm: FormGroup;
   public hiddenPlayerInformation = false;
@@ -37,14 +39,14 @@ export class GoalUpdateComponent  implements OnInit {
               private playerService: PlayerService,
               private sanitizer: DomSanitizer,
               private formBuilder: FormBuilder,
-              private messageService: MessageService
+              private messageService: MessageService,
+              private handleError: HttperrorresponseService
 
   ) {
     for (let i = 0; i < 5; i++) {
       this.goalScore.push(Object.assign({value: i}));
     }
   }
-
   playerPositions: Position[] = [
     {value: 'Forward', viewValue: 'Forward'},
     {value: 'Midfielder', viewValue: 'Midfielder'},
@@ -160,8 +162,8 @@ export class GoalUpdateComponent  implements OnInit {
         seasonId: any;
         value: any;
       };
-      if (this.goalId != null)
-      goalInformation.id = this.goalId;
+      if (this.goalId != null) {
+      goalInformation.id = this.goalId; }
       goalInformation.playerId = this.goalForm.value.playerName;
       goalInformation.seasonId = this.goalForm.value.seasonName;
       goalInformation.homeGoalScore = this.goalForm.value.homegoalscore;
@@ -175,9 +177,6 @@ export class GoalUpdateComponent  implements OnInit {
       });
     }
   }
-
-  goalId: any = null;
-
   clubPlayedChanged(value: any) {
     const playerId = this.goalForm.value.playerName;
     const seasonId = this.goalForm.value.seasonName;
@@ -215,10 +214,13 @@ export class GoalUpdateComponent  implements OnInit {
     this.updateGoalInformation(event);
   }
 
-   updateGoalInformation(event:any) {
-     this.springService.get('/getGoalInformation/' + event + '/' + this.goalForm.value.playerName).subscribe(data => {
-       this.goalDetails.data = data;
-       this.jsonData = data;
+   updateGoalInformation(event: any) {
+     this.springService.get('/getGoalInformation/' + event + '/' + this.goalForm.value.playerName).pipe(
+       catchError(this.handleError.errorHandlingOfGoalInformation)
+     ).subscribe(data => {
+       this.goalDetails = new MatTableDataSource(data);
+       this.goalDetails.paginator = this.paginator;
+     }, error => {
      });
    }
 
@@ -226,7 +228,6 @@ export class GoalUpdateComponent  implements OnInit {
     this.goalDetails.filter = value.trim().toLowerCase();
   }
 }
-
 
 export interface Season {
   id: any;

@@ -40,10 +40,10 @@ export class LoginComponent  {
       'password': this.userForm.value.password
     }
       this.authService.getToken(user).pipe(
-        catchError(this.handleError.errorHandling) 
+        catchError(this.handleError.errorHandling)
       ).subscribe(mytoken => {
         localStorage.setItem('token', mytoken.token);
-        this.router.navigate(["/home"]);
+        this.router.navigate(['/home']);
       }, error => {
          this.messageService.showMessage('User name or password does not match');
       });
