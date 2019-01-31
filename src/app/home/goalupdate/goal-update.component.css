@@ -1,5 +1,6 @@
 .mat-column-clubFileName, .mat-colum-clubName, .mat-column-homeGoalScore, .mat-column-awayGoalScore, .mat-column-awayGoalConsider, .mat-column-homeGoalConsider {
-  flex: 0 0 75px;
+  width: 100px;
+  height: 70px;
 }
 
 .w-100{

@@ -16,21 +16,19 @@
 }
 
 .mat-column-topScorer, .mat-column-topMidFielder, .mat-column-topDefender, .mat-column-topGoalKepper {
-  max-width: 225px;
-  min-width: 100px;
-  min-height: 56px;
+  width: 100px;
+  height: 70px;
+
 }
 
 .mat-column-seasonName {
-  max-width: 100px;
-  min-width: 100px;
-  min-height: 56px;
+  width: 100px;
+  height: 70px;
 }
 
 .mat-column-winerClubName, .mat-column-runnerUpClubName {
-  max-width: 225px;
-  min-width: 150px;
-  min-height: 56px;
+  width: 100px;
+  height: 70px;
 }
 
 div.scrollmenu {
@@ -42,4 +40,6 @@ div.scrollmenu ng-container {
   display: inline-block;
 
 }
+
+
 

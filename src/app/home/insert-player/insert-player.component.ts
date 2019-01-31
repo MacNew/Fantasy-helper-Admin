@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { MessageService } from '../../share/message.service';
 import { SpringService } from '../../share/springService/spring.service';
@@ -6,11 +6,11 @@ import { PlayerService } from '../../share/player.service';
 import { HttperrorresponseService } from '../../share/httpErrorHandlingService/httperrorresponse.service'
 import { catchError, switchMap } from 'rxjs/operators';
 import { CustomValidators } from '../../validators/custom-validators';
-import { MatTableDataSource } from '@angular/material';
+import {MatPaginator, MatTableDataSource} from '@angular/material';
 import { takeUntil } from 'rxjs/operators';
 import { DomSanitizer } from '@angular/platform-browser';
 import { forkJoin, Subject } from 'rxjs';
-import { HttpHeaders } from '@angular/common/http'; 
+import { HttpHeaders } from '@angular/common/http';
 
 export interface Position {
   value: string;
@@ -23,10 +23,11 @@ export interface Position {
   styleUrls: ['./insert-player.component.css']
 })
 export class InsertPlayerComponent implements OnInit {
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   clubName: string;
   private onDestroy$ = new Subject<void>();
-  playerdetails = new MatTableDataSource();
-  displayedColumns:string[] = [
+  playerdetails: MatTableDataSource<[{}]>; // = new MatTableDataSource();
+  displayedColumns: string[] = [
     'fileName', 'playerName', 'playerPosition'
   ];
   playerPositions: Position[] = [
@@ -35,7 +36,7 @@ export class InsertPlayerComponent implements OnInit {
     {value: 'Defender', viewValue: 'Defender'},
     {value: 'GoalKeeper', viewValue: 'GoalKeeper'}
   ];
-  clublist: clubDetails[] = [];
+  clublist: ClubDetails[] = [];
   clubImage: any;
   playerImage: any;
   selectedFile = null;
@@ -94,11 +95,12 @@ export class InsertPlayerComponent implements OnInit {
           }), this.springService.get('/get/player/' + this.playerForm.value.playerclubName.toString()))} )
        ).subscribe((res: any ) => {
          console.log('Image', res[0]);
-         let UrlCreator = window.URL;
+         const UrlCreator = window.URL;
          this.clubImage = this.sanitizer.bypassSecurityTrustUrl(
          UrlCreator.createObjectURL(res[0]));
-         this.playerdetails.data = res[1];
-    },error => {
+         this.playerdetails = new MatTableDataSource(res[1]);
+         this.playerdetails.paginator = this.paginator;
+    }, error => {
        this.messageService.showMessage(error.message);
     });
   }
@@ -107,7 +109,7 @@ export class InsertPlayerComponent implements OnInit {
   }
 
   onSubmit() {
-   let formData: FormData = new FormData();
+   const formData: FormData = new FormData();
    formData.append('file', this.selectedFile);
    formData.append('playerName', this.playerForm.value.playerName);
    formData.append('clubId', this.playerForm.value.playerclubName);
@@ -117,11 +119,11 @@ export class InsertPlayerComponent implements OnInit {
    ).subscribe(data => {
     this.playerService.playerListStateChange.next();
      this.messageService.showMessage('player inserted Sucessfully');
-   },error => {
+   }, error => {
       this.messageService.showMessage('data can t inserted');
    });
   }
-    
+
   onFileSelected(event) {
     this.selectedFile = event.target.files[0];
     const reader = new FileReader();
@@ -130,7 +132,7 @@ export class InsertPlayerComponent implements OnInit {
   }
 }
 
-export interface clubDetails {
+export interface ClubDetails {
   clubName: any;
   id: any;
   fileName: any;

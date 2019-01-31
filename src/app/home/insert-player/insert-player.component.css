@@ -24,3 +24,9 @@ img {
 #insert-player-button{
     margin-top:15px
 }
+
+.mat-column-fileName, .mat-column-playerPosition, .mat-column-playerName {
+  width: 100px;
+  height: 70px;
+}
+

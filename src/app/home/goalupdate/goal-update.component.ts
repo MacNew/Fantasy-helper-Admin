@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {SpringService} from '../../share/springService/spring.service';
-import {clubDetails, Position} from '../insert-player/insert-player.component';
+import {ClubDetails, Position} from '../insert-player/insert-player.component';
 import {PlayerService} from '../../share/player.service';
 import {playerDetails} from '../season/season.component';
 import {catchError, map} from 'rxjs/operators';
@@ -19,8 +19,8 @@ import {HttperrorresponseService} from '../../share/httpErrorHandlingService/htt
 export class GoalUpdateComponent  implements OnInit {
   clubid: string;
   playerPostion: string;
-  clublist: clubDetails[] = [];
-  clublistplayed: clubDetails[] = [];
+  clublist: ClubDetails[] = [];
+  clublistplayed: ClubDetails[] = [];
   playerDetails: playerDetails[] = [];
   seasonDetails: Season[] = [];
   goalScore: Goal[] = [];
