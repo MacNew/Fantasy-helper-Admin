@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators,FormBuilder, AbstractControl } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { MessageService } from '../../share/message.service';
 import { SpringService } from '../../share/springService/spring.service';
 import { ClubService } from '../../share/club.service';
@@ -18,15 +18,14 @@ import { DialogsPromptComponent } from '../../share/dialogs/dialogs-prompt.compo
   styleUrls: ['./insert-clubs.component.css']
 })
 
-export class InsertClubsComponent implements OnInit{
+export class InsertClubsComponent {
   clubdetails = new MatTableDataSource();
   displayedColumns:string[] = [
-    'fileName','clubName','isCurrentSeasonPlaying', 'action'
+    'fileName', 'clubName', 'isCurrentSeasonPlaying', 'action'
   ];
   deleteDialog: any;
-  clubLogoName: string = "";
+  clubLogoName: string = '';
   imageSrc: string;
-  clubsDetails : any[];
   myClubForm = {
   clubName: ['', Validators.required],
   file: ['', Validators.compose([
@@ -47,7 +46,7 @@ export class InsertClubsComponent implements OnInit{
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private clubService: ClubService
-  ) { 
+  ) {
     this.clubForm = this.formBilder.group(this.myClubForm);
     this.clubService.clublistStateChange$.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
        this.getClubList();
@@ -71,18 +70,18 @@ export class InsertClubsComponent implements OnInit{
   }
 
   onSubmit() {
-    if (this.clubForm.valid) { 
-      var formDate: FormData = new FormData();
-      var clubId = this.route.snapshot.url[(this.route.snapshot.url.length-1)].path;
-      var insertOrEdit;
-      clubId === 'insertclubs' ? '':formDate.append('clubId', clubId);
+    if (this.clubForm.valid) {
+      const formDate: FormData = new FormData();
+      const clubId = this.route.snapshot.url[(this.route.snapshot.url.length - 1)].path;
+      let insertOrEdit;
+      clubId === 'insertclubs' ? '' : formDate.append('clubId', clubId);
       formDate.append('file', this.selectedFile);
       formDate.append('clubName', this.clubForm.value.clubName);
       formDate.append('isPlaying', this.clubForm.value.isCurrentPlaying);
       if (clubId === 'insertclubs') {
-        insertOrEdit = this.springService.post('/insert/clubs',formDate);
+        insertOrEdit = this.springService.post('/insert/clubs', formDate);
       } else {
-        insertOrEdit = this.springService.put('/edit/clubs', formDate); 
+        insertOrEdit = this.springService.put('/edit/clubs', formDate);
       }
       insertOrEdit.pipe(
         catchError(this.handleError.errorHandling)
@@ -96,16 +95,12 @@ export class InsertClubsComponent implements OnInit{
        });
       }
   }
-  
+
   onFileSelected(event): void {
       this.selectedFile = event.target.files[0];
       const reader = new FileReader();
       reader.onload = e => this.imageSrc = reader.result.toString();
       reader.readAsDataURL(this.selectedFile);
-  }
-
-  ngOnInit() {
-
   }
 
   getClubList() {
@@ -135,7 +130,7 @@ export class InsertClubsComponent implements OnInit{
 
   deleteClub(clubDetails) {
     return () => {
-      this.springService.delete("/delete/club/" + clubDetails.id).pipe(
+      this.springService.delete('/delete/club/' + clubDetails.id).pipe(
         catchError(this.handleError.errorHandling)
       ).subscribe((data) => {
           this.getClubList();

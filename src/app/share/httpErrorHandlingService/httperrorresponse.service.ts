@@ -4,7 +4,6 @@ import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
-  
 })
 
 export class HttperrorresponseService {
@@ -13,8 +12,11 @@ export class HttperrorresponseService {
     const statusCode = res.status;
     const error = {
       statusCode: statusCode,
-      message: res 
+      message: res
     }
     return throwError(error);
+  }
+  public errorHandlingOfGoalInformation(res: HttpErrorResponse) {
+     return throwError(res);
   }
 }
